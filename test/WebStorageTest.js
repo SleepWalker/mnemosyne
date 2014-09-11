@@ -41,7 +41,7 @@ describe('WebStorage', function() {
 
             ws.create(model);
 
-            assert.ok(!model.isNew(), 'The model should be not new and have id');
+            assert.notOk(model.isNew(), 'The model should be not new and have id');
         });
 
         it('should preserve id, if it already specified', function() {
@@ -111,6 +111,12 @@ describe('WebStorage', function() {
             ws = WebStorage.open();
 
             assert.ok(ws.find(model.id));
+        });
+
+        it('throws exception, when wrong id', function() {
+            assert.throws(function() {
+                ws.find('mnemosyne');
+            });
         });
     });
 

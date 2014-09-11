@@ -98,7 +98,12 @@ function open(storageName)
     function findModel(id)
     {
         var data = get(modelId(id));
-        return data ? JSON.parse(data) : null;
+
+        if(!data) {
+            throw new Error('No such data with id: ' + id);
+        }
+
+        return JSON.parse(data);
     }
 
     function getStorageName() {
