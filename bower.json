@@ -1,0 +1,17 @@
+{
+  "name": "mnemosyne",
+  "version": "0.0.0",
+  "authors": [
+    "SleepWalker <dev@udf.su>"
+  ],
+  "license": "MIT",
+  "homepage": "http://github.com/SleepWalker",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "gulp",
+    "test"
+  ],
+}
