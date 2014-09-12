@@ -28,7 +28,8 @@ describe('Storage', function(){
             };
 
 
-            Storage.setStorage(storage);
+            // testing chain
+            assert.deepEqual(Storage.setStorage(storage), Storage);
         });
         
         it('throws on unexisted operation', function() {

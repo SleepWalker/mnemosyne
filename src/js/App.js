@@ -29,7 +29,7 @@ function run()
         throw new Error('The app is already running');
     }
 
-    getComponent('storage').open();
+    // getComponent('storage').open();
     getComponent('composer').compose();
 
     isRunning = true;

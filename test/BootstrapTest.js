@@ -52,7 +52,7 @@ describe('App', function(){
         it('should open storage and compose', function() {
             App.run();
 
-            assert.ok(storage.open.called);
+            assert.notOk(storage.open.called);
             assert.ok(composer.compose.called);
         });
 

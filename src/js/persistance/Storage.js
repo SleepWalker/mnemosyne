@@ -60,6 +60,8 @@ function setStorage(st) {
     storage = st;
 
     Backbone.sync = storage ? customSync : defaultSync;
+
+    return this;
 }
 
 module.exports = {
