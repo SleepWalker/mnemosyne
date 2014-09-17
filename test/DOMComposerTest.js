@@ -32,5 +32,7 @@ describe('DOMComposer', function() {
         assert.equal(called, 2);
         assert.equal($(regions[0]).html(), 'test1');
         assert.equal($(regions[1]).html(), 'test2');
+
+        $(regions.join(',')).remove();
     });
 });

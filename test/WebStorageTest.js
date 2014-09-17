@@ -8,12 +8,12 @@ describe('WebStorage', function() {
 
     beforeEach(function() {
         localStorage.clear();
-        ws = WebStorage.open();
+        ws = new WebStorage();
     });
 
-    describe('#open()', function() {
+    describe('Instantiate', function() {
         it('should return storage instance', function() {
-            assert.ok(WebStorage.open());
+            assert.ok(new WebStorage());
         });
     });
 
@@ -22,8 +22,8 @@ describe('WebStorage', function() {
             assert.ok(ws.getStorageName());
         });
 
-        it('open() should accept the name of the storage', function() {
-            ws = WebStorage.open('test');
+        it('constructor should accept the name of the storage', function() {
+            ws = new WebStorage('test');
 
             assert.equal(ws.getStorageName(), 'test');
         });
@@ -108,7 +108,7 @@ describe('WebStorage', function() {
         it('should find model after storage reopening', function() {
             ws.create(model);
 
-            ws = WebStorage.open();
+            ws = new WebStorage();
 
             assert.ok(ws.find(model.id));
         });

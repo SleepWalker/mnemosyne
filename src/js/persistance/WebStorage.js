@@ -25,7 +25,7 @@ if(!JSON.stringify && !JSON.parse) {
 
 var delimiter = '|';
 
-function open(storageName)
+function WebStorage(storageName)
 {
     if(!storageName) {
         storageName = 'default';
@@ -110,14 +110,12 @@ function open(storageName)
         return storageName;
     }
 
-    return {
-        getStorageName: getStorageName,
-        create: createModel,
-        update: createModel,
-        destroy: destroyModel,
-        find: findModel,
-        findAll: findAllModels
-    };
+    this.getStorageName = getStorageName;
+    this.create = createModel;
+    this.update = createModel;
+    this.destroy = destroyModel;
+    this.find = findModel;
+    this.findAll = findAllModels;
 }
 
 function S4() {
@@ -143,6 +141,4 @@ function remove(key, value)
     localStorage.removeItem(key, value);
 }
 
-module.exports = {
-    open: open,
-};
+module.exports = WebStorage;

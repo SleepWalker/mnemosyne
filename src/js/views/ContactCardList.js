@@ -2,18 +2,17 @@ var Backbone = require('backbone');
 var $ = require('jquery');
 
 var ContactCardList = Backbone.View.extend({
-    tagName: 'div',
     id: 'user-card-list',
     className: 'user-card-list',
 
     collection: require('../collections/ContactCollection'),
     itemView: require('../views/ContactCardView'),
 
-    // btnName: 'Добавить контакт',
-
     initialize: function(options)
     {
         $.extend(this, options);
+
+        this.listenTo(this.collection, 'add', this.addItem);
     },
 
     render: function()
@@ -23,19 +22,21 @@ var ContactCardList = Backbone.View.extend({
         return this;
     },
 
-    renderItems: function($container) {
-        this.collection.forEach($.proxy(function(model) {
-            var view = new this.itemView({
-                model: model
-            });
-
-            view.render();
-
-            view.$el.addClass('active');
-
-            $container.append(view.el);
-        }, this));
+    renderItems: function() {
+        this.collection.forEach($.proxy(this.addItem, this));
     },
+
+    addItem: function(model) {
+        var view = new this.itemView({
+            model: model
+        });
+
+        view.render();
+
+        view.$el.addClass('display');
+
+        this.$el.append(view.el);
+    }
 });
 
 module.exports = ContactCardList;

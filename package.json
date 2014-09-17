@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "backbone": "^1.1.2",
+    "backbone.cocktail": "^0.5.8",
     "bootstrap-sass": "^3.2.0",
     "jquery": "^2.1.1"
   },

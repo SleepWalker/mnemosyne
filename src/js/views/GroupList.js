@@ -9,45 +9,58 @@ var GroupList = Backbone.View.extend({
     collection: require('../collections/GroupCollection'),
     itemView: require('../views/GroupItemView'),
 
-    // btnName: 'Добавить контакт',
+    events: {
+        'click li': 'setActiveItem',
+    },
+
 
     initialize: function(options)
     {
         $.extend(this, options);
+
+        this.listenTo(this.collection, 'add', this.render);
     },
 
     render: function()
     {
-        this.renderItems(this.$el);
+        this.$el.empty();
 
-        this.renderAddBtn(this.$el);
+        var allGroupsItem = new this.collection.model({
+            name: 'All Groups',
+        });
+
+        this.renderItem(allGroupsItem);
+
+        this.$('li').eq(0).addClass('active');
+
+        this.renderItems();
 
         return this;
     },
 
-    renderItems: function($container) {
-        this.collection.forEach($.proxy(function(model) {
-            var view = new this.itemView({
-                model: model
-            });
-
-            view.render();
-
-            view.$el.addClass('active');
-
-            $container.append(view.el);
-        }, this));
+    renderItems: function() {
+        this.collection.forEach($.proxy(this.renderItem, this));
     },
 
-    renderAddBtn: function($container) {
-        // var btn = new BtnView({
-        //     title: this.btnName
-        // });
-        // btn.render();
+    renderItem: function(model) {
+        var view = new this.itemView({
+            model: model
+        });
 
-        // $container.append(btn.$el);
-        $container.append('<button>btn</button>');
-    }
+        view.render();
+
+        view.$el.addClass('display');
+
+        this.$el.append(view.el);
+    },
+
+    setActiveItem: function(e) {
+        this.$('li').removeClass('active');
+
+        $(e.currentTarget).addClass('active');
+
+        e.preventDefault();
+    },
 });
 
 module.exports = GroupList;

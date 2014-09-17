@@ -1,34 +1,15 @@
 .contacts-container {
     height: 100%;
-    @include display-flex;
-    @include justify-content(space-between);
-    @include align-items(stretch);
-    @include flex-wrap(wrap);
-}
-
-.contacts-grid {
-    position: relative;
-    @include flex-grow(1);
-}
-
-.contacts-form-container {
-    @include flex-basis(200px);
-}
-
-.contacts-form {
-    padding: 30px;
 }
 
 .user-card-list {
     padding: 20px;
     width: 100%;
-    height: 100%;
+    max-height: 100%;
 
     @include display-flex;
     @include justify-content(space-between);
-    @include align-items(baseline);
     @include flex-wrap(wrap);
-
 }
 
 .user-card {
@@ -40,8 +21,12 @@
     opacity: 0;
     @include transition(transform 0.3s ease 0s, opacity 0.3s ease 0s);
 
-    &.active {
+    &.display {
         opacity: 1;
         @include transform(scale3d(1,1,1));
+    }
+
+    &.hidden {
+        display: none;
     }
 } 

@@ -1,6 +1,28 @@
 .group-list {
     @include off-canvas-list();
+
+    li.active a {
+        background-color: $primary-color;
+    }
+
+    li:first-child button {
+        display: none;
+    }
 }
 
 .tab-bar { @include tab-bar-base; }
-.tab-bar-section { @include tab-bar-section; }
+.tab-bar-section { 
+    @include tab-bar-section;
+
+    > div,
+    > h1 {
+        display: inline-block;
+    }
+
+    button, .button {
+        font-size: 2rem;
+        line-height: rem-calc(17px);
+        margin: 0;
+        padding: rem-calc(0 4px 10px);
+    }
+}

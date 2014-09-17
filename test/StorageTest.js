@@ -5,7 +5,6 @@ var Storage = require('../src/js/persistance/Storage');
 var Backbone = require('backbone');
 
 describe('Storage', function(){
-
     describe('#setStorage()', function() {
         it('should inject specified storage in Backbone.sync', function() {
             var initial = Backbone.sync;
@@ -77,7 +76,7 @@ describe('Storage', function(){
             assert.ok(storage.destroy.calledWith(model));
         });
 
-        it('should call success callbac if everything ok', function() {
+        it('should call success callback if everything ok', function() {
             var callback = sinon.spy();
             Backbone.sync('read', {}, {
                 success: callback

@@ -1,23 +1,11 @@
 var Backbone = require('backbone');
 
-var template = require('./tpl/contact-card-form.handlebars');
+var BaseFormView = require('./BaseFormView');
 
-var UserCardForm = Backbone.View.extend({
-    tagName: 'div',
-    className: 'contacts-form',
-
-    initialize: function(options)
-    {
-        // this.collection = options.collection;
-    },
-
-    render: function()
-    {
-        this.$el.html(template());
-        // this.$el.html(template(model.toJSON()));
-
-        return this;
-    }
+// the model should be private
+var UserCardForm = BaseFormView.extend({
+    collection: require('../collections/ContactCollection'),
+    template: require('./tpl/contact-card-form.handlebars')
 });
 
 module.exports = UserCardForm;

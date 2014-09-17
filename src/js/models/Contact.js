@@ -29,7 +29,7 @@ var Contact = Backbone.Model.extend({
             emails: [],
             locations: []
         }
-    }
+    },
 });
 
 module.exports = Contact;

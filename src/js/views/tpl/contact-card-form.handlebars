@@ -1,10 +1,10 @@
 <!-- http://foundation.zurb.com/docs/components/abide.html -->
 <div class="row">
-    <input type="text" placeholder="Name *"  aria-label="Name *" id="name" name="name" value="{{name}}" />
+    <input type="text" placeholder="Name *"  aria-label="Name *" id="name" name="name" value="{{name}}" data-parsley-required />
 </div>
 
 <div class="row">
-    <input type="text" placeholder="Surname *"  aria-label="Surname *" id="surname" name="surname" value="{{surname}}" />
+    <input type="text" placeholder="Surname"  aria-label="Surname" id="surname" name="surname" value="{{surname}}" />
 </div>
 
 <div class="row">
@@ -21,4 +21,9 @@
 
 <div class="row">
     <input type="text" placeholder="Group"  aria-label="Group" id="group" name="group" value="{{group}}" />
+</div>
+
+<div class="row">
+    <button type="submit">Done</button>
+    <a href="#" class="js-destroy">destroy</a>
 </div>
