@@ -18,17 +18,6 @@ URL
  */
 var Contact = Backbone.Model.extend({
     defaults: {
-        name: '',
-        surname: '',
-        birthday: '',
-        organization: '',
-        position: '',
-        group: '',
-        contacts: {
-            phones: [],
-            emails: [],
-            locations: []
-        }
     },
 });
 

@@ -4,9 +4,9 @@ var sinon = require('sinon');
 var Backbone = require('backbone');
 Backbone.$ = require('jquery');
 
-var ContactCardView = require('../src/js/views/ContactCardView');
+var PersonCardView = require('../src/js/views/PersonCardView');
 
-describe('ContactCardView', function(){
+describe('PersonCardView', function(){
     var model, view;
     describe('render', function() {
         beforeEach(function() {
@@ -19,7 +19,7 @@ describe('ContactCardView', function(){
                 position: 'SEO'
             });
 
-            view = new ContactCardView({
+            view = new PersonCardView({
                 model: model
             });
 
@@ -139,13 +139,13 @@ describe('ContactCardView', function(){
     });
 
     describe('#applyCriterium()', function() {
-        var collection = require('../src/js/collections/ContactCollection');
+        var collection = require('../src/js/collections/PersonCollection');
         beforeEach(function() {
             model = new collection.model(model.toJSON());
 
             collection.add(model);
 
-            view = new ContactCardView({
+            view = new PersonCardView({
                 model: model
             });
 

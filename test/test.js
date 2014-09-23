@@ -4,21 +4,23 @@ require('./DOMComposerTest');
 require('./WebStorageTest');
 require('./StorageTest');
 
-require('./ContactTest');
-require('./ContactCollectionTest');
-require('./ContactCardViewTest');
-require('./ContactCardListTest');
-require('./ContactCardFormTest');
-require('./ContactCardAddActionTest');
+require('./PersonTest');
+require('./PersonCollectionTest');
+require('./PersonCardViewTest');
+require('./PersonCardListTest');
+require('./PersonCardFormTest');
+require('./PersonCardAddActionTest');
 
 require('./GroupTest');
-require('./GroupListTest');
+require('./GroupFilterListTest');
 require('./GroupItemViewTest');
 require('./GroupFormTest');
 require('./GroupAddActionTest');
 
 require('./SearchFormTest');
 
-
+/**
+ * Mixins
+ */
 require('./EditableTest');
 require('./ValidatableTest');

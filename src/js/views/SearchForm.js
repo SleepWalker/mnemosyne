@@ -5,7 +5,7 @@ var template = require('./tpl/search-form.handlebars');
 var SearchForm = Backbone.View.extend({
     tagName: 'div',
 
-    collection: require('../collections/ContactCollection'),
+    collection: require('../collections/PersonCollection'),
 
     events: {
         'change input': 'applyCriterium',

@@ -1,22 +1,14 @@
 var Backbone = require('backbone');
-var $ = require('jquery');
 
 var GroupList = Backbone.View.extend({
     tagName: 'ul',
-    id: 'group-list',
-    className: 'group-list',
 
     collection: require('../collections/GroupCollection'),
     itemView: require('../views/GroupItemView'),
 
-    events: {
-        'click li': 'setActiveItem',
-    },
-
-
     initialize: function(options)
     {
-        $.extend(this, options);
+        Backbone.$.extend(this, options);
 
         this.listenTo(this.collection, 'add', this.render);
     },
@@ -25,13 +17,11 @@ var GroupList = Backbone.View.extend({
     {
         this.$el.empty();
 
-        var allGroupsItem = new this.collection.model({
-            name: 'All Groups',
+        var noGroupItem = new this.collection.model({
+            name: 'No Group (todo)',
         });
 
-        this.renderItem(allGroupsItem);
-
-        this.$('li').eq(0).addClass('active');
+        this.renderItem(noGroupItem);
 
         this.renderItems();
 
@@ -39,10 +29,12 @@ var GroupList = Backbone.View.extend({
     },
 
     renderItems: function() {
-        this.collection.forEach($.proxy(this.renderItem, this));
+        this.collection.forEach(Backbone.$.proxy(this.renderItem, this));
     },
 
-    renderItem: function(model) {
+    renderItem: function(model, where) {
+        where = 'string' == typeof where ? where : 'append';
+
         var view = new this.itemView({
             model: model
         });
@@ -51,15 +43,7 @@ var GroupList = Backbone.View.extend({
 
         view.$el.addClass('display');
 
-        this.$el.append(view.el);
-    },
-
-    setActiveItem: function(e) {
-        this.$('li').removeClass('active');
-
-        $(e.currentTarget).addClass('active');
-
-        e.preventDefault();
+        this.$el[where](view.el);
     },
 });
 

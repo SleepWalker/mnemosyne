@@ -6,11 +6,18 @@ module.exports = function(options) {
             var regions = options.regions;
 
             for(var selector in regions) {
-                var BackboneView = new regions[selector]();
+                var regionViews = regions[selector];
+                if(!(regionViews instanceof Array)) {
+                    regionViews = [regionViews];
+                }
 
-                BackboneView.render();
+                for (var i = 0; i < regionViews.length; i++) {
+                    var BackboneView = new regionViews[i]();
 
-                $(selector).append(BackboneView.$el);
+                    BackboneView.render();
+
+                    $(selector).append(BackboneView.$el);
+                }
             }
         }
     };

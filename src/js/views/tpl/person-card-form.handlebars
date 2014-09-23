@@ -20,7 +20,23 @@
 </div>
 
 <div class="row">
-    <input type="text" placeholder="Group"  aria-label="Group" id="group" name="group" value="{{group}}" />
+    <label data-dropdown="#dropdown-group">
+        <span class="prefix">Group</span>
+        <input type="text" id="group" name="group" value="{{group}}" readonly />
+    </label>
+    <input type="hidden" id="groupId" name="groupId" value="{{groupId}}" />
+</div>
+
+<div class="row" id="contacts">
+    <label>
+        <a class="prefix button dropdown" data-dropdown="#dropdown-meta" href="#">Phone</a>
+        <input type="text" id="group" name="group" value="{{group}}" />
+    </label>
+    <input type="hidden" id="groupId" name="groupId" value="{{groupId}}" />
+</div>
+
+<div class="row">
+    <a href="#" class="button" data-dropdown="#dropdown-meta">Add</a>
 </div>
 
 <div class="row">

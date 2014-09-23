@@ -1,10 +1,10 @@
 var Backbone = require('backbone');
 var Validatable = require('../mixins/Validatable');
+var _ = require('underscore');
 
 
-// the model should be private
 var viewConstructor = function() {
-    var model;
+    var model; // the model should be private
 
     this.getModel = function() {
         return model;
@@ -41,7 +41,7 @@ var BaseFormView = Backbone.View.extend({
     constructor: viewConstructor,
     
     tagName: 'div',
-    className: 'contacts-form',
+    className: 'persons-form',
     inputSelector: 'input,textarea,select',
     removeOnSave: false,
 
@@ -55,6 +55,8 @@ var BaseFormView = Backbone.View.extend({
         options = options || {};
 
         this.removeOnSave = options.removeOnSave || this.removeOnSave;
+
+        _.extend(this, _.omit(Validatable, 'render'));
 
         // this time we do not need auto asign of model property
         delete this.model;
@@ -92,7 +94,8 @@ var BaseFormView = Backbone.View.extend({
     populateModel: function() {
         var model = this.getModel();
 
-        Validatable.patchModel(model, this.$('form'));
+        this.patchModel(this.getModel());
+
         // we should not change model, if the form filled with errors
         if(!model.isValid()) {
             return false;

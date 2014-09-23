@@ -1,19 +1,19 @@
 var assert = require('chai').assert;
 var sinon = require('sinon');
 
-var contactCollection = require('../src/js/collections/ContactCollection');
+var personCollection = require('../src/js/collections/PersonCollection');
 var groupCollection = require('../src/js/collections/GroupCollection');
 
 describe('Group', function() {
     beforeEach(function() {
-        contactCollection.reset();
+        personCollection.reset();
         groupCollection.reset();
     });
 
-    describe('Contact management API', function() {
-        var expected, group, contact;
+    describe('Person management API', function() {
+        var expected, group;
         beforeEach(function() {
-            expected = 'contact';
+            expected = 'person';
             group = new groupCollection.model({
                 id: 'groupId',
                 name: 'test'
@@ -22,46 +22,45 @@ describe('Group', function() {
         });
 
         it('should NOT save reference if Group.isNew()', function() {
-            var expected = 'contact';
             var group = new groupCollection.model({
                 name: 'test'
             });
             group.stopListening();
 
-            assert.notOk(group.hasContact(expected));
+            assert.notOk(group.hasPerson(expected));
 
-            contactCollection.add({
+            personCollection.add({
                 'id': expected,
                 'surname': 'surname'
             });
-            contactCollection.at(0).id = expected;
-            group.addContact(contactCollection.at(0));
+            personCollection.at(0).id = expected;
+            group.addPerson(personCollection.at(0));
 
-            assert.notOk(group.hasContact(expected));
+            assert.notOk(group.hasPerson(expected));
         });
 
-        it('should be able to save reference to contacts', function() {
-            contactCollection.add({
+        it('should be able to save reference to persons', function() {
+            personCollection.add({
                 'id': expected,
                 'groupId': group.id,
                 'surname': 'surname'
             });
-            contactCollection.at(0).id = expected;
-            group.addContact(contactCollection.at(0));
+            personCollection.at(0).id = expected;
+            group.addPerson(personCollection.at(0));
 
-            assert.ok(group.hasContact(expected));
+            assert.ok(group.hasPerson(expected));
         });
 
-        it('should save itself when new Contact relation is added', function() {
+        it('should save itself when new Person relation is added', function() {
             group.save = sinon.spy();
 
-            contactCollection.add({
+            personCollection.add({
                 'id': expected,
                 'groupId': group.id,
                 'surname': 'surname'
             });
-            contactCollection.at(0).id = expected;
-            group.addContact(contactCollection.at(0));
+            personCollection.at(0).id = expected;
+            group.addPerson(personCollection.at(0));
 
             assert.ok(group.save.called);
         });
@@ -69,7 +68,7 @@ describe('Group', function() {
         it('should NOT save if model isNew()', function() {
             group.save = sinon.spy();
 
-            group.addContact(new contactCollection.model({
+            group.addPerson(new personCollection.model({
                 'surname': 'surname'
             }));
 
@@ -78,13 +77,13 @@ describe('Group', function() {
 
     });
 
-    describe('Contacts listening', function() {
-        // TODO: addContact should be called once
-        var group, contact;
+    describe('Persons listening', function() {
+        // TODO: addPerson should be called once
+        var group, person;
 
-        var setContactId = function(id) {
-            contact.set('id', id);
-            contact[contact.idAttribute] = id;
+        var setPersonId = function(id) {
+            person.set('id', id);
+            person[person.idAttribute] = id;
         };
 
         beforeEach(function() {
@@ -94,31 +93,31 @@ describe('Group', function() {
             });
             groupCollection.add(group);
 
-            contact  = new contactCollection.model({
+            person = new personCollection.model({
                 surname: 'test',
                 group: group.get('name'),
                 groupId: group.get('id')
             });
         });
 
-        it('should grab Contact reference when it was updated', function() {
-            setContactId('contactId');
-            contactCollection.add(contact);
+        it('should grab Person reference when it was updated', function() {
+            setPersonId('personId');
+            personCollection.add(person);
 
-            assert.ok(group.hasContact(contact));
+            assert.ok(group.hasPerson(person));
         });
 
-        it('should NOT grab Contact reference when it has no `id`', function() {
-            contactCollection.add(contact);
+        it('should NOT grab Person reference when it has no `id`', function() {
+            personCollection.add(person);
 
-            assert.notOk(group.hasContact(contactCollection.at(0)));
+            assert.notOk(group.hasPerson(personCollection.at(0)));
         });
 
         describe('Group changing', function() {
             var newGroup;
             beforeEach(function() {
-                setContactId('contactId');
-                contactCollection.add(contact);
+                setPersonId('personId');
+                personCollection.add(person);
 
                 newGroup = new groupCollection.model({
                     'name': 'new',
@@ -127,24 +126,24 @@ describe('Group', function() {
                 groupCollection.add(newGroup);
             });
 
-            it('should add relation to the new Group, when Contact changed Group', function() {
-                contact.set('groupId', newGroup.id);
+            it('should add relation to the new Group, when Person changed Group', function() {
+                person.set('groupId', newGroup.id);
 
-                assert.ok(newGroup.hasContact(contact));
+                assert.ok(newGroup.hasPerson(person));
             });
 
-            it('should destroy old relation, when Contact Group changed', function() {
-                contact.set('groupId', newGroup.id);
+            it('should destroy old relation, when Person Group changed', function() {
+                person.set('groupId', newGroup.id);
 
-                assert.notOk(group.hasContact(contact));
+                assert.notOk(group.hasPerson(person));
             });
 
-            it('should destroy relation, when Contact destroyed', function() {
-                var id = contact.id;
+            it('should destroy relation, when Person destroyed', function() {
+                var id = person.id;
                 
-                contact.destroy();
+                person.destroy();
 
-                assert.notOk(group.hasContact(id));
+                assert.notOk(group.hasPerson(id));
             });
         });
     });

@@ -4,12 +4,12 @@
 
 var Backbone = require('backbone');
 
-var ContactCardView = Backbone.View.extend({
+var PersonCardView = Backbone.View.extend({
     tagName: 'div',
-    className: 'user-card js-edit',
+    className: 'person-card js-edit',
 
-    formView: require('./ContactCardForm'),
-    template: require('./tpl/contact-card.handlebars'),
+    formView: require('./PersonCardForm'),
+    template: require('./tpl/person-card.handlebars'),
 
     initialize: function(options)
     {
@@ -105,7 +105,7 @@ function matchesModelAttributes(str, attributes) {
     return false;
 }
 
-module.exports = ContactCardView;
+module.exports = PersonCardView;
 
 // mixing in some basic behavior
 require('backbone.cocktail').mixin(module.exports,

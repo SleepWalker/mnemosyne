@@ -1,13 +1,13 @@
 var assert = require('chai').assert;
 var sinon = require('sinon');
 
-var collection = require('../src/js/collections/ContactCollection');
-var ContactCardList = require('../src/js/views/ContactCardList');
+var collection = require('../src/js/collections/PersonCollection');
+var PersonCardList = require('../src/js/views/PersonCardList');
 
-describe('ContactCardList', function() {
+describe('PersonCardList', function() {
     var view;
     beforeEach(function() {
-        view = new ContactCardList();
+        view = new PersonCardList();
         view.render();
     });
 

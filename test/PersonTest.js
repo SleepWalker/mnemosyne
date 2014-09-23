@@ -4,11 +4,11 @@ var sinon = require('sinon');
 var Backbone = require('backbone');
 Backbone.$ = require('jquery');
 
-var Contact = require('../src/js/models/Contact');
+var Person = require('../src/js/models/Person');
 // we require a view to handle user input
-var ContactCardForm = require('../src/js/views/ContactCardForm');
+var PersonCardForm = require('../src/js/views/PersonCardForm');
 
-describe('Contact', function() {
+describe('Person', function() {
     var model, view;
 
     beforeEach(function() {
@@ -21,7 +21,7 @@ describe('Contact', function() {
             position: 'SEO'
         });
 
-        view = new ContactCardForm({
+        view = new PersonCardForm({
             model: model
         });
 

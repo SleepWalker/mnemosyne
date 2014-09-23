@@ -1,12 +1,12 @@
 var Backbone = require('backbone');
 var $ = require('jquery');
 
-var ContactCardList = Backbone.View.extend({
-    id: 'user-card-list',
-    className: 'user-card-list',
+var PersonCardList = Backbone.View.extend({
+    id: 'person-card-list',
+    className: 'person-card-list',
 
-    collection: require('../collections/ContactCollection'),
-    itemView: require('../views/ContactCardView'),
+    collection: require('../collections/PersonCollection'),
+    itemView: require('../views/PersonCardView'),
 
     initialize: function(options)
     {
@@ -39,4 +39,4 @@ var ContactCardList = Backbone.View.extend({
     }
 });
 
-module.exports = ContactCardList;
+module.exports = PersonCardList;

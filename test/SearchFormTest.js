@@ -5,7 +5,7 @@ var Backbone = require('backbone');
 Backbone.$ = require('jquery');
 
 var SearchForm = require('../src/js/views/SearchForm');
-var collection = require('../src/js/collections/ContactCollection');
+var collection = require('../src/js/collections/PersonCollection');
 
 describe('SearchForm', function() {
     var view;

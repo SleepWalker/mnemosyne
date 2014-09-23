@@ -1,7 +1,9 @@
 var Backbone = require('backbone');
 
 var GroupCollection = Backbone.Collection.extend({
-    model: require('../models/Group')
+    model: require('../models/Group'),
+
+    comparator: 'name'
 });
 
 var collection = new GroupCollection();

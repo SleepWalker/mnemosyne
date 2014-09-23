@@ -4,7 +4,7 @@ var sinon = require('sinon');
 var Backbone = require('backbone');
 Backbone.$ = require('jquery');
 
-var GroupItemView = require('../src/js/views/GroupItemView');
+var GroupItemView = require('../src/js/views/GroupFilterItemView');
 
 describe('GroupView', function() {
     var view, model;
@@ -73,34 +73,34 @@ describe('GroupView', function() {
     // Thist tests are also integration tests with GroupListView
     describe('#setGroupCriterium()', function() {
         var view;
-        var GroupList = require('../src/js/views/GroupList');
+        var GroupFilterList = require('../src/js/views/GroupFilterList');
         var collection = require('../src/js/collections/GroupCollection');
-        var contactCollection = require('../src/js/collections/ContactCollection');
+        var personCollection = require('../src/js/collections/PersonCollection');
 
         beforeEach(function() {
-            view = new GroupList();
+            sinon.stub(personCollection, 'setGroupCriterium');
+            
+            view = new GroupFilterList();
             view.render();
 
-            sinon.stub(contactCollection, 'setGroupCriterium');
-
             collection.add([
-              {name: "Flying Dutchman", id: 'my group'},
-              {name: "Black Pearl"}
+              {name: "Black Pearl"},
+              {name: "Flying Dutchman", id: 'my group'}
             ]);
         });
 
         afterEach(function() {
             collection.reset();
-            contactCollection.setGroupCriterium.restore();
+            personCollection.setGroupCriterium.restore();
         });
 
         it('should apply criterium when the children clicked', function() {
-            var $el = view.$('li').eq(1);
+            var $el = view.$('li').last();
 
             $el.click();
 
-            assert.ok(contactCollection.setGroupCriterium.calledWith(
-                collection.at(0).id
+            assert.ok(personCollection.setGroupCriterium.calledWith(
+                collection.last().id
                 ));
         });
 
@@ -109,7 +109,7 @@ describe('GroupView', function() {
 
             $el.click();
             assert.ok(
-                contactCollection.setGroupCriterium.calledWith(null)
+                personCollection.setGroupCriterium.calledWith(null)
                 );
         });
     });

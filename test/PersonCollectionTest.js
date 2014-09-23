@@ -1,10 +1,10 @@
 var assert = require('chai').assert;
 var sinon = require('sinon');
 
-var collection = require('../src/js/collections/ContactCollection');
+var collection = require('../src/js/collections/PersonCollection');
 
 
-describe('ContactCollection', function() {
+describe('PersonCollection', function() {
     afterEach(function() {
         collection.reset();
     });

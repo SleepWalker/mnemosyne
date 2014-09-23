@@ -1,24 +1,16 @@
 require('../vendor/parsley'); // the version, adjusted for require
-
-function validator($el) {
-    // setup for Foundation Css Framework
-    // TODO: can be separated according to DIP
-    var parsley = $el.parsley({
-        classHandler: function(ParsleyField) {
-            return ParsleyField.$element.parent();
-        },
-        errorClass: 'error',
-        errorsWrapper: '<small class="error"></small>',
-        errorTemplate: '<span></span>'
-    });
-    return function() {
-        var valid = parsley.validate();
-        return !valid;
-    };
-}
+var _ = require('underscore');
 
 module.exports = {
-    patchModel: function(model, $form) {
+    patchModel: function(model) {
+        model = model ? model : this.model;
+
+        model.validate = _.bind(this.formHasErrors, this);
+    },
+
+    patchForm: function() {
+        var $form = this.$('form');
+
         // Do not add data-parsley-validate to your forms
         // (C) http://parsleyjs.org/doc/index.html#psly-installation-javascript
         if($form.attr('data-parsley-validate')) {
@@ -29,10 +21,35 @@ module.exports = {
         // http://foundation.zurb.com/docs/components/abide.html
         $form.attr('data-abide', '');
 
-        model.validate = validator($form);
+        // setup for Foundation Css Framework
+        this._parsley = $form.parsley({
+            classHandler: function(ParsleyField) {
+                return ParsleyField.$element.parent();
+            },
+            errorClass: 'error',
+            errorsWrapper: '<small class="error"></small>',
+            errorTemplate: '<span></span>'
+        });
+    },
+
+    isFormPatched: function() {
+        return !!this._parsley;
+    },
+
+    getValidator: function() {
+        if(!this.isFormPatched()) {
+            this.patchForm();
+        }
+
+        return this._parsley;
+    },
+
+    formHasErrors: function() {
+        return !this.getValidator().validate();
     },
 
     render: function() {
-        this.patchModel(this.model, this.$('form'));
+        this.patchForm();
+        this.patchModel();
     }
 };

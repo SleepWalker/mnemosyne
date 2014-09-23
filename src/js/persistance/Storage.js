@@ -64,6 +64,11 @@ function setStorage(st) {
     return this;
 }
 
+function getStorage(st) {
+    return storage;
+}
+
 module.exports = {
-    setStorage: setStorage
+    setStorage: setStorage,
+    getStorage: getStorage
 };

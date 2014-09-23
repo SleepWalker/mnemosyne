@@ -21,7 +21,7 @@ var WebStorage = require('./persistance/WebStorage');
 /**
  * LOREMIMPSUM
  */
-var collection = require('./collections/ContactCollection');
+var collection = require('./collections/PersonCollection');
 collection.add([{
     'id': 'test',
     name: 'test',
@@ -40,10 +40,8 @@ var collection = require('./collections/GroupCollection');
 collection.add([{
     name: 'testGroup',
     id: 'one',
-    contacts: {test: 'test'}
 }, {
     id: 'two',
-    contacts: {test22: 'test22'},
     name: 'testGroup22'
 }]);
 /**
@@ -55,11 +53,14 @@ App.configure({
         storage: require('./persistance/Storage').setStorage(new WebStorage()),
         composer: require('./dom/DOMComposer')({
             regions: {
-                '#region-groups': require('./views/GroupList'),
+                '#region-groups': require('./views/GroupFilterList'),
                 '#region-group-add': require('./views/GroupAddAction'),
                 '#region-search': require('./views/SearchForm'),
-                '#region-contacts': require('./views/ContactCardList'),
-                '#region-contact-add': require('./views/ContactCardAddAction'),
+                '#region-person-cards': [
+                    require('./views/PersonCardList')
+                ],
+                '#region-person-add': require('./views/PersonCardAddAction'),
+                '#region-user': require('./views/UserView'),
             }
         })
     }

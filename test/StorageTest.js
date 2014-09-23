@@ -15,6 +15,16 @@ describe('Storage', function(){
         });
     });
 
+    describe('#getStorage()', function() {
+        it('should return current storage', function() {
+            var expected = {storage: 'test'};
+
+            Storage.setStorage(expected);
+
+            assert.deepEqual(Storage.getStorage(), expected);
+        });
+    });
+
     describe('#sync()', function() {
         var storage;
         beforeEach(function() {

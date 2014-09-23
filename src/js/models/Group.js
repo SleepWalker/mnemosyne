@@ -1,23 +1,23 @@
 var Backbone = require('backbone');
 
-var contactCollection = require('../collections/ContactCollection');
+var personCollection = require('../collections/PersonCollection');
 
-function createRelation(contactId)
+function createRelation(personId)
 {
-    var contacts = this.get('contacts');
-    contacts[contactId] = contactId;
-    this.set('contacts', contacts);
+    var persons = this.get('_persons');
+    persons[personId] = personId;
+    this.set('_persons', persons);
 
     this.save();
 }
 
-function destroyRelation(contactId)
+function destroyRelation(personId)
 {
-    contactId = contactId.cid ? contactId.id : contactId;
+    personId = personId.cid ? personId.id : personId;
     
-    var contacts = this.get('contacts');
-    delete contacts[contactId];
-    this.set('contacts', contacts);
+    var persons = this.get('_persons');
+    delete persons[personId];
+    this.set('_persons', persons);
 
     this.save();
 }
@@ -25,39 +25,39 @@ function destroyRelation(contactId)
 var Group = Backbone.Model.extend({
     defaults: {
         name: '',
-        contacts: null,
+        _persons: null,
     },
 
     initialize: function(options) {
-        this.listenTo(contactCollection, 'change:groupId', this.addContact);
-        this.listenTo(contactCollection, 'add', this.addContact);
-        this.listenTo(contactCollection, 'destroy', destroyRelation);
+        this.listenTo(personCollection, 'change:groupId', this.addPerson);
+        this.listenTo(personCollection, 'add', this.addPerson);
+        this.listenTo(personCollection, 'destroy', destroyRelation);
 
-        this.set('contacts', {});
+        this.set('_persons', {});
     },
 
-    hasContact: function(contact) {
-        var contactId = contact.cid ? contact.id : contact;
+    hasPerson: function(person) {
+        var personId = person.cid ? person.id : person;
 
-        if(!contactId) {
+        if(!personId) {
             return false;
         }
 
-        return contactId in this.get('contacts');
+        return personId in this.get('_persons');
     },
 
-    addContact: function(contact) {
-        var contactId = contact.cid ? contact.id : contact;
+    addPerson: function(person) {
+        var personId = person.cid ? person.id : person;
 
-        contact = contactCollection.get(contactId);
-        if(!contact || contact.isNew() || this.isNew()) {
+        person = personCollection.get(personId);
+        if(!person || person.isNew() || this.isNew()) {
             return;
         }
 
-        if(contact.get('groupId') == this.id) {
-            createRelation.call(this, contactId);
-        } else if(contact.previousAttributes()['groupId'] == this.id) {
-            destroyRelation.call(this, contactId);
+        if(person.get('groupId') == this.id) {
+            createRelation.call(this, personId);
+        } else if(person.previousAttributes()['groupId'] == this.id) {
+            destroyRelation.call(this, personId);
         }
     },
 });

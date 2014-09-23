@@ -1,20 +1,15 @@
 var Backbone = require('backbone');
 
-var contactCollection = require('../collections/ContactCollection');
+// TODO: self-orderable
 
 var GroupItemView = Backbone.View.extend({
     tagName: 'li',
 
-    formView: require('./GroupForm'),
-    template: require('./tpl/group-item.handlebars'),
-
-    events: {
-        'click': 'setCriterium',
-    },
+    template: require('./tpl/a-name-view.handlebars'),
 
     initialize: function(options)
     {
-        this.model = options.model;
+        Backbone.$.extend(this, options);
 
         this.listenTo(this.model, 'change', this.render);
     },
@@ -24,18 +19,7 @@ var GroupItemView = Backbone.View.extend({
         this.$el.html(this.template(this.model.toJSON()));
 
         return this;
-    },
-
-    setCriterium: function() {
-        var id = this.model.id ? this.model.id : null;
-        contactCollection.setGroupCriterium(id);
-    },
+    }
 });
 
 module.exports = GroupItemView;
-
-// mixing in some basic behavior
-require('backbone.cocktail').mixin(module.exports,
-    require('../mixins/Deletable'),
-    require('../mixins/Editable')
-    );

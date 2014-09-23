@@ -4,12 +4,27 @@
 @import "foundation-settings";
 @import "foundation";
 
+$aside-width: 200px;
+
 @import "layout";
 
-@import "contacts";
+@import "person-cards";
 @import "groups";
 
 html,
 body {
     height: 100%;
+}
+
+.dropdown-content {
+    @include dropdown-container($content:list, $triangle:bottom);
+}
+
+.dropdown-menu {
+    list-style: none;
+    margin: 0;
+
+    li {
+        @include dropdown-style;
+    }
 }

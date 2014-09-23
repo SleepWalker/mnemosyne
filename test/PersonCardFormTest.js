@@ -4,11 +4,11 @@ var sinon = require('sinon');
 var Backbone = require('backbone');
 Backbone.$ = require('jquery');
 
-var ContactCardForm = require('../src/js/views/ContactCardForm');
-var collection = require('../src/js/collections/ContactCollection');
+var PersonCardForm = require('../src/js/views/PersonCardForm');
+var collection = require('../src/js/collections/PersonCollection');
 
 
-describe('ContactCardForm (itegration test with ContactCardView)', function(){
+describe('PersonCardForm (itegration test with PersonCardView)', function(){
     var view, model;
     beforeEach(function() {
         model = {
@@ -20,7 +20,7 @@ describe('ContactCardForm (itegration test with ContactCardView)', function(){
             position: 'SEO'
         };
 
-        view = new ContactCardForm();
+        view = new PersonCardForm();
     });
 
     afterEach(function() {
@@ -33,7 +33,7 @@ describe('ContactCardForm (itegration test with ContactCardView)', function(){
         });
 
         it('should accept model in constructor', function() {
-            view = new ContactCardForm({
+            view = new PersonCardForm({
                 model: model,
             });
 
@@ -61,7 +61,7 @@ describe('ContactCardForm (itegration test with ContactCardView)', function(){
 
     describe('form interaction', function() {
         beforeEach(function() {
-            view = new ContactCardForm({
+            view = new PersonCardForm({
                 model: model,
             });
             collection.add(model);

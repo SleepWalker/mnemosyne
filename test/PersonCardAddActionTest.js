@@ -2,15 +2,15 @@ var assert = require('chai').assert;
 var sinon = require('sinon');
 
 var Backbone = require('backbone');
-var ContactCardAddAction = require('../src/js/views/ContactCardAddAction');
+var PersonCardAddAction = require('../src/js/views/PersonCardAddAction');
 
 Backbone.$ = require('jquery');
 
-describe('ContactCardAddAction', function(){
+describe('PersonCardAddAction', function(){
     var view;
 
     beforeEach(function() {
-        view = new ContactCardAddAction({
+        view = new PersonCardAddAction({
         });
 
         view.render();

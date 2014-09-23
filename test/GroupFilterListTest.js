@@ -4,14 +4,13 @@ var sinon = require('sinon');
 var Backbone = require('backbone');
 Backbone.$ = require('jquery');
 
-var GroupList = require('../src/js/views/GroupList');
+var GroupFilterList = require('../src/js/views/GroupFilterList');
 var collection = require('../src/js/collections/GroupCollection');
-var contactCollection = require('../src/js/collections/ContactCollection');
 
-describe('GroupList', function() {
+describe('GroupFilterList', function() {
     var view;
     beforeEach(function() {
-        view = new GroupList();
+        view = new GroupFilterList();
         view.render();
     });
 

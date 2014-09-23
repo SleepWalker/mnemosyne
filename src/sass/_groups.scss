@@ -5,7 +5,8 @@
         background-color: $primary-color;
     }
 
-    li:first-child button {
+    li:first-child button,
+    li:nth-child(2) button {
         display: none;
     }
 }

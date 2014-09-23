@@ -1,8 +1,7 @@
-.contacts-container {
-    height: 100%;
+.person-cards-container {
 }
 
-.user-card-list {
+.person-card-list {
     padding: 20px;
     width: 100%;
     max-height: 100%;
@@ -12,7 +11,7 @@
     @include flex-wrap(wrap);
 }
 
-.user-card {
+.person-card {
     @include panel();
     @include flex-grow(1);
     margin: 10px;

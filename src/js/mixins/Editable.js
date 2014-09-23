@@ -15,6 +15,8 @@ function setPrivateMethods()
             // ignoring clicks from the form
             return;
         }
+        
+        e.preventDefault();
 
         if(this.isFormRendered()) {
             return;

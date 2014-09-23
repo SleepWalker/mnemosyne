@@ -1,11 +1,11 @@
 var Backbone = require('backbone');
 var $ = require('jquery');
 
-var ContactCardAddAction = Backbone.View.extend({
-    className: 'contact-add-container',
+var PersonCardAddAction = Backbone.View.extend({
+    className: 'person-add-container',
 
-    formView: require('./ContactCardForm'),
-    template: require('./tpl/contact-add-action.handlebars'),
+    formView: require('./PersonCardForm'),
+    template: require('./tpl/person-add-action.handlebars'),
 
     render: function()
     {
@@ -15,7 +15,7 @@ var ContactCardAddAction = Backbone.View.extend({
     },
 });
 
-module.exports = ContactCardAddAction;
+module.exports = PersonCardAddAction;
 
 // mixing in some basic behavior
 require('backbone.cocktail').mixin(module.exports,
