@@ -16,8 +16,17 @@ URL
 Номер для интернет-звонков
 Пользовательская настройка...
  */
+/**
+ * email
+ * phone
+ * url
+ * custom
+ */
 var Contact = Backbone.Model.extend({
     defaults: {
+        type: '',
+        name: '',
+        value: ''
     },
 });
 

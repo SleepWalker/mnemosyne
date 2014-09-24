@@ -8,14 +8,18 @@ var groupDropdown = require('./GroupDropdownView');
 var PersonCardForm = BaseFormView.extend({
     collection: require('../collections/PersonCollection'),
     template: require('./tpl/person-card-form.handlebars'),
+    contactsForm: require('./ContactManageForm'),
 
     render: function() {
         BaseFormView.prototype.render.apply(this, [].slice.call(arguments));
 
-
         this.$el.css({position: 'relative'});
         this.$el.append(groupDropdown.$el);
         this.listenTo(groupDropdown, 'change', this.onChangeHandler);
+
+        var contactsForm = new this.contactsForm();
+        contactsForm.render();
+        this.$('#person-contacts').append(contactsForm.$el);
     },
 
     onChangeHandler: function(group) {

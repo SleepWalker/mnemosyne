@@ -14,7 +14,7 @@ var GroupDropdownList = Backbone.View.extend({
 
         // binding event to body to prevent from
         Backbone.$('body').on(
-            'click', '#dropdown-group a',
+            'click', '#'+this.id+' a',
             Backbone.$.proxy(this.triggerChange, this)
         );
     },
