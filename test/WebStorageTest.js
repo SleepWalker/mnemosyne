@@ -4,11 +4,15 @@ var WebStorage = require('../src/js/persistance/WebStorage');
 var Backbone = require('backbone');
 
 describe('WebStorage', function() {
-    var ws;
+    var ws, model;
 
     beforeEach(function() {
         localStorage.clear();
         ws = new WebStorage();
+
+        model = new Backbone.Model();
+
+        model.collection = {url: 'test'};
     });
 
     describe('Instantiate', function() {
@@ -30,12 +34,6 @@ describe('WebStorage', function() {
     });
 
     describe('#create()', function() {
-        var model;
-
-        beforeEach(function() {
-            model = new Backbone.Model();
-        });
-
         it('should create model id', function() {
             assert.ok(model.isNew());
 
@@ -64,8 +62,6 @@ describe('WebStorage', function() {
 
     describe('#update()', function() {
         it('should be updated', function() {
-            var model = new Backbone.Model();
-
             ws.create(model);
 
             model.set('something', 'else');
@@ -79,8 +75,6 @@ describe('WebStorage', function() {
 
     describe('#destroy()', function() {
         it('should be deleted', function() {
-            var model = new Backbone.Model();
-
             ws.create(model);
 
             var actual = ws.destroy(model);
@@ -91,12 +85,6 @@ describe('WebStorage', function() {
     });
 
     describe('#find()', function() {
-        var model;
-
-        beforeEach(function() {
-            model = new Backbone.Model();
-        });
-
         it('should return model by guid', function() {
             ws.create(model);
 
@@ -121,22 +109,36 @@ describe('WebStorage', function() {
     });
 
     describe('#findAll()', function() {
-        it('should return all models', function() {
-            var model1 = new Backbone.Model();
+        it('should throw an error, when no url', function() {
+            assert.throws(function() {
+                ws.findAll({});
+            }, 'A "url" property or function must be specified');
+        });
+
+        it('should return all models taking url into account', function() {
+            var Model1 = Backbone.Model.extend({
+                collection: {url: 'foo'}
+            });
+            var model1 = new Model1();
             ws.create(model1);
-            var model2 = new Backbone.Model();
+            var Model2 = Backbone.Model.extend({
+                collection: {url: 'bar'}
+            });
+            var model2 = new Model2();
             ws.create(model2);
+            var model3 = new Model2();
+            ws.create(model3);
 
-            var models = ws.findAll();
+            var models = ws.findAll({url: 'bar'});
 
-            var expected = [model1.toJSON(), model2.toJSON()];
+            var expected = [model2.toJSON(), model3.toJSON()];
             assert.deepEqual(models, expected);
         });
     });
 
     function assertModelExist(model)
     {
-        var index = localStorage.getItem(ws.getStorageName());
+        var index = localStorage.getItem(ws.getStorageName() + '-' + model.collection.url);
         var modelJSON = JSON.parse(localStorage.getItem(ws.getStorageName() + '-' + model.id));
 
         assert.equal(index, model.id);
@@ -145,10 +147,12 @@ describe('WebStorage', function() {
 
     function assertModelNotExist(model)
     {
-        var index = localStorage.getItem(ws.getStorageName());
+        var index = localStorage.getItem(ws.getStorageName() + '-' + model.collection.url);
         var modelJSON = JSON.parse(localStorage.getItem(ws.getStorageName() + '-' + model.id));
 
         assert.notEqual(index, model.id);
         assert.equal(modelJSON, null);
     }
 });
+// нужно получить все модели определенного класса
+// принадлежащие определенному id

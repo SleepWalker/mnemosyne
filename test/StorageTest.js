@@ -52,21 +52,13 @@ describe('Storage', function(){
 
             Backbone.sync('read', {id: id});
 
-            assert.ok(storage.find.called);
             assert.ok(storage.find.calledWith(id));
-        });
-
-        it('should read all with findAll()', function() {
-            Backbone.sync('read', {});
-
-            assert.ok(storage.findAll.called);
         });
 
         it('should create new model with create()', function() {
             var model = {id: '123'};
             Backbone.sync('create', model);
 
-            assert.ok(storage.create.called);
             assert.ok(storage.create.calledWith(model));
         });
 
@@ -74,7 +66,6 @@ describe('Storage', function(){
             var model = {id: '123'};
             Backbone.sync('update', model);
 
-            assert.ok(storage.update.called);
             assert.ok(storage.update.calledWith(model));
         });
 
@@ -82,27 +73,20 @@ describe('Storage', function(){
             var model = {id: '123'};
             Backbone.sync('delete', model);
 
-            assert.ok(storage.destroy.called);
             assert.ok(storage.destroy.calledWith(model));
+        });
+
+        it('should read all with findAll()', function() {
+            var expected = new Backbone.Collection({url: 'foo'});
+            Backbone.sync('read', expected);
+
+            assert.ok(storage.findAll.calledWith(expected));
         });
 
         it('should call success callback if everything ok', function() {
             var callback = sinon.spy();
             Backbone.sync('read', {}, {
                 success: callback
-            });
-
-            assert.ok(callback.called);
-        });
-
-        it('should call success callback if everything ok', function() {
-            var callback = sinon.spy();
-            storage.findAll = function() {
-                throw new Error('error');
-            };
-
-            Backbone.sync('read', {}, {
-                error: callback
             });
 
             assert.ok(callback.called);

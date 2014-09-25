@@ -9,6 +9,10 @@ describe('PersonCollection', function() {
         collection.reset();
     });
 
+    it('should have url property', function() {
+        assert.ok(collection.url);
+    });
+
     it('should be sorted alphabetically', function() {
         collection.add({surname: 'b'});
         collection.add({surname: 'a'});

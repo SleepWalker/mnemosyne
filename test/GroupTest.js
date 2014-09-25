@@ -4,6 +4,12 @@ var sinon = require('sinon');
 var personCollection = require('../src/js/collections/PersonCollection');
 var groupCollection = require('../src/js/collections/GroupCollection');
 
+describe('GroupCollection', function() {
+    it('should have url property', function() {
+        assert.ok(groupCollection.url);
+    });
+});
+
 describe('Group', function() {
     beforeEach(function() {
         personCollection.reset();

@@ -7,6 +7,8 @@
  * @link https://github.com/SleepWalker/mnemosyne
  */
 
+var _ = require('underscore');
+
 function isStorageSupported() {
     try {
         return 'localStorage' in window && window['localStorage'] !== null;
@@ -31,8 +33,9 @@ function WebStorage(storageName)
         storageName = 'default';
     }
 
-    index = get(storageName);
-    index = (index && index.split(delimiter)) || [];
+    // indexes to fetch collections of models
+    // based on collection url
+    var indexes = {};
 
     function createModel(model)
     {
@@ -49,26 +52,16 @@ function WebStorage(storageName)
     function saveModel(model) {
         set(modelId(model), JSON.stringify(model.toJSON()));
 
-        if(index.join(delimiter).indexOf(model.id) == -1) {
-            index.push(model.id);
-            saveIndex();
+        if(indexHasModel(model)) {
+            getIndex(model).push(model.id);
+            saveIndex(model);
         }
     }
 
-    function modelId(model)
+    function findAllModels(collection)
     {
-        var id = model.id ? model.id : model;
+        var index = getIndex(collection);
 
-        return storageName + '-' + id;
-    }
-
-    function saveIndex()
-    {
-        set(storageName, index.join(delimiter));
-    }
-
-    function findAllModels()
-    {
         var models = [];
         for(var i = 0; i < index.length; i++)
         {
@@ -85,12 +78,15 @@ function WebStorage(storageName)
     function destroyModel(model)
     {
         remove(modelId(model));
+
+        var index = getIndex(model);
         index = index
             .join(delimiter)
             .replace(model.id, '')
             .replace(delimiter+delimiter, '')
-            .split(delimiter);
-        saveIndex();
+            .split(delimiter)
+            ;
+        saveIndex(model, index);
 
         return model.toJSON();
     }
@@ -104,6 +100,58 @@ function WebStorage(storageName)
         }
 
         return JSON.parse(data);
+    }
+
+    function modelId(model)
+    {
+        var id = model.id ? model.id : model;
+
+        return storageName + '-' + id;
+    }
+
+    /**
+     * @param  {array} index can be ommited, if we only altering
+     *                       the object achieved from getIndex()
+     */
+    function saveIndex(model, index)
+    {
+        index = index ? index : getIndex(model);
+        set(getIndexId(model), index.join(delimiter));
+    }
+
+    function indexHasModel(model)
+    {
+        return getIndex(model).join(delimiter).indexOf(model.id) == -1;
+    }
+
+    function getIndex(model)
+    {
+        if(indexes[getIndexId(model)]) {
+            return indexes[getIndexId(model)];
+        } else {
+            var index = get(getIndexId(model));
+            index = (index && index.split(delimiter)) || [];
+
+            indexes[getIndexId(model)] = index;
+
+            return index;
+        }
+    }
+
+    function getIndexId(model)
+    {
+        if(model.collection) {
+            model = model.collection;
+        }
+
+        var modelId = _.result(model, 'url') || urlError();
+        
+        return storageName + '-' + modelId;
+    }
+
+    function urlError()
+    {
+        throw new Error('A "url" property or function must be specified');
     }
 
     function getStorageName() {

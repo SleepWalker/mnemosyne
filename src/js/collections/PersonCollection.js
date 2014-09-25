@@ -8,6 +8,8 @@ var searchCriterium = {
 var PersonCollection = Backbone.Collection.extend({
     model: require('../models/Person'),
 
+    url: '/person',
+
     comparator: 'surname',
 
     setGroupCriterium: function(groupId) {

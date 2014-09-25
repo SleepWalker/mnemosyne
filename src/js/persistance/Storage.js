@@ -6,23 +6,17 @@ var defaultSync = Backbone.sync;
 function customSync(action, model, options) {
     options = options || {};
 
-    // delete is bad name for the JS function :)
+    // delete is the bad name for JS function :)
     var method = action == 'delete' ? 'destroy' : action;
 
     if(!crud[method]) {
         throw new Error('Unknown CRUD operation: '+action);
     }
 
-    try {
-        var result = crud[method].call(null, model);
+    var result = crud[method].call(null, model);
 
-        if(options.success) {
-            options.success(result);
-        }
-    } catch(e) {
-        if(options.error) {
-            options.error(e.message);
-        }
+    if(options.success) {
+        options.success(result);
     }
 }
 
@@ -31,7 +25,8 @@ function read(model) {
         return storage.find(model.id);
     }
 
-    return storage.findAll();
+    // collection
+    return storage.findAll(model);
 }
 
 function create(model) {
