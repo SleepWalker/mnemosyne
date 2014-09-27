@@ -8,7 +8,10 @@ module.exports = {
         this.listenTo(this.model, 'destroy', this.remove);
     },
 
-    destroyModel: function() {
+    destroyModel: function(event) {
+        event.stopPropagation();
+        event.preventDefault();
+
         this.model.destroy();
     }
 };

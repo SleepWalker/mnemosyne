@@ -9,7 +9,8 @@ var Person = Backbone.Model.extend({
         position: '',
         group: '',
         groupId: '',
-        contactRelation: ''
+        contactRelation: '',
+        contacts: []
     },
 });
 

@@ -1,8 +1,9 @@
 var Backbone = require('backbone');
 
 var contactTypeDropdown = require('./ContactTypeDropdownList');
+var BaseFormView = require('./BaseFormView');
 
-var ContactManageFormItem = Backbone.View.extend({
+var ContactManageFormItem = BaseFormView.extend({
     tagName: 'div',
     className: 'row',
 
@@ -11,13 +12,26 @@ var ContactManageFormItem = Backbone.View.extend({
     initialize: function(options)
     {
         Backbone.$.extend(this, options);
+
+        BaseFormView.prototype.initialize.apply(this, [].slice.call(arguments));
     },
 
     render: function()
     {
-        this.$el.html(this.template(Backbone.$.extend({
-            dropdownId: contactTypeDropdown.el.id
-        }, this.model.toJSON())));
+        var html = this.template(Backbone.$.extend({
+            dropdownId: contactTypeDropdown.el.id,
+            typeLabel: this.getModel().getTypeLabel(),
+            valuePlaceholder: this.getModel().getValuePlaceholder()
+        }, this.getModel().toJSON()));
+
+        this.wrapInForm(html)
+            .appendTo(this.$el)
+            ;
+
+        this.inputs().on(
+            'change',
+            Backbone.$.proxy(this.populateModel, this)
+        );
 
         return this;
     }

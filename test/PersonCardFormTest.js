@@ -8,7 +8,7 @@ var PersonCardForm = require('../src/js/views/PersonCardForm');
 var collection = require('../src/js/collections/PersonCollection');
 
 
-describe('PersonCardForm (itegration test with PersonCardView)', function(){
+describe('PersonCardForm (integration test with PersonCardView)', function(){
     var view, model;
     beforeEach(function() {
         model = {
@@ -25,6 +25,7 @@ describe('PersonCardForm (itegration test with PersonCardView)', function(){
 
     afterEach(function() {
         collection.reset();
+        view.remove();
     });
 
     describe('#setModel() and #getModel()', function() {
@@ -103,16 +104,18 @@ describe('PersonCardForm (itegration test with PersonCardView)', function(){
         it('should save model on form submit', function() {
             view.getModel().save = sinon.spy();
 
-            view.$('form').submit();
+            view.$('form').eq(0).submit();
 
+            assert.ok(view.getModel().isValid());
             assert.ok(view.getModel().save.calledOnce);
         });
 
         it('should populate model on submit', function() {
             view.populateModel = sinon.spy();
 
-            view.$('form').submit();
+            view.$('form').eq(0).submit();
 
+            assert.ok(view.getModel().isValid());
             assert.ok(view.populateModel.calledOnce);
         });
 
@@ -142,9 +145,52 @@ describe('PersonCardForm (itegration test with PersonCardView)', function(){
         it('should destroy model on js-destroy click', function() {
             view.getModel().destroy = sinon.spy();
 
-            view.$('.js-destroy').click();
+            view.$('.js-destroy').last().click();
 
             assert.ok(view.getModel().destroy.calledOnce);
+        });
+    });
+
+    describe('Contacts integration', function() {
+        var expected = 'foo@bar.baz';
+        var contact = {type: 'email', 'label': 'foo', 'value': expected};
+
+        beforeEach(function() {
+            view = new PersonCardForm({
+                model: model,
+            });
+        });
+
+        it('should init ContactColleciton and render Contact form', function() {
+            view.getModel().set('contacts', [contact]);
+
+            view.render();
+
+            assert.equal(view.$('form form [name=value]').val(), expected);
+        });
+
+        it('should collect Contacts before save', function() {
+            collection.add(model);
+            view.render();
+            view.contactCollection.add(contact);
+
+            view.saveModel();
+
+            assert.deepEqual(
+                view.getModel().get('contacts'),
+                view.contactCollection.toJSON()
+                );
+        });
+
+        it('the Contact should be destroyable separatly from Person', function() {
+            view.render();
+            view.remove = sinon.spy();
+            Backbone.$('body').append(view.el);
+
+            view.$('form form .js-destroy').click();
+
+            assert.notOk(view.remove.called);
+            assert.equal(Backbone.$('form').length, 1);
         });
     });
 });

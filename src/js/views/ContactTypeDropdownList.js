@@ -19,13 +19,12 @@ var ContactTypeDropdownList = Backbone.View.extend({
     },
 
     render: function() {
+        var Contact = require('../models/Contact');
         var $el = Backbone.$('<ul class="dropdown-menu">');
-        $el.append('<li><a href="#1">Item 1</a></li>');
-        $el.append('<li><a href="#2">Item 2</a></li>');
-        $el.append('<li><a href="#3">Item 3</a></li>');
-        $el.append('<li><a href="#4">Item 4</a></li>');
-        $el.append('<li><a href="#5">Item 5</a></li>');
-        $el.append('<li><a href="#6">Item 6</a></li>');
+
+        Backbone.$.each(Contact.prototype.availableTypes, function(type, options) {
+            $el.append('<li><a href="#" data-contact-type="' + type + '">' + options.label + '</a></li>');
+        });
 
         this.$el.append($el);
 
@@ -35,12 +34,8 @@ var ContactTypeDropdownList = Backbone.View.extend({
     triggerChange: function(event) {
         event.preventDefault();
 
-        // var modelId = event.currentTarget.getAttribute('data-model-id');
-        // var model = view.collection.get(modelId);
-        // if(!model) {
-        //     model = new view.collection.model();
-        // }
-        // this.trigger('change', model);
+        var type = event.currentTarget.getAttribute('data-contact-type');
+        this.trigger('change', type);
     }
 });
 

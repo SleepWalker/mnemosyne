@@ -2,6 +2,7 @@ var Backbone = require('backbone');
 var Validatable = require('../mixins/Validatable');
 var _ = require('underscore');
 
+// TODO: it can be mixin, probably
 
 var viewConstructor = function() {
     var model; // the model should be private
@@ -41,13 +42,12 @@ var BaseFormView = Backbone.View.extend({
     constructor: viewConstructor,
     
     tagName: 'div',
-    className: 'persons-form',
     inputSelector: 'input,textarea,select',
     removeOnSave: false,
 
     events: {
         'submit form': 'saveModel',
-        'click .js-destroy': 'deleteModel'
+        'click .js-destroy': 'destroyModel'
     },
 
     initialize: function(options)
@@ -66,13 +66,23 @@ var BaseFormView = Backbone.View.extend({
 
     render: function()
     {
-        this.$el.html('<form>'+this.template()+'</form>');
+        this.wrapInForm(this.template())
+            .appendTo(this.$el)
+            ;
 
         if(this.hasModel()) {
             this.populateForm();
         }
 
         return this;
+    },
+
+    wrapInForm: function(html) {
+        this.$form = Backbone.$('<form>');
+
+        this.$form.append(Backbone.$(html));
+
+        return this.$form;
     },
 
     populateForm: function() {
@@ -88,7 +98,11 @@ var BaseFormView = Backbone.View.extend({
     },
 
     inputs: function() {
-        return this.$(this.inputSelector);
+        var $form = this.$form;
+
+        return this.$(this.inputSelector).filter(function() {
+            return Backbone.$(this).parents('form')[0] === $form[0];
+        });
     },
 
     populateModel: function() {
@@ -126,15 +140,32 @@ var BaseFormView = Backbone.View.extend({
             };
         }
 
-        if(!this.getModel().collection) {
-            this.collection.create(this.getModel(), saveOptions);
-        } else {
-            this.getModel().save(null, saveOptions);
+        if(this.beforeSave()) {
+            if(!this.getModel().collection) {
+                this.collection.create(this.getModel(), saveOptions);
+            } else {
+                this.getModel().save(null, saveOptions);
+            }
+
+            this.afterSave();
         }
     },
 
-    deleteModel: function() {
-        this.getModel().destroy();
+    beforeSave: _.noop,
+    afterSave: _.noop,
+
+    destroyModel: function(event) {
+        event.stopPropagation();
+        event.preventDefault();
+
+        var saveOptions = {};
+        if(this.removeOnSave) {
+            saveOptions = {
+                success: Backbone.$.proxy(this.remove, this),
+            };
+        }
+
+        this.getModel().destroy(saveOptions);
     }
 });
 

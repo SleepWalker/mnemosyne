@@ -17,6 +17,9 @@ require('./GroupItemViewTest');
 require('./GroupFormTest');
 require('./GroupAddActionTest');
 
+require('./ContactManageFormTest');
+require('./ContactManageFormItemTest');
+
 require('./SearchFormTest');
 
 /**

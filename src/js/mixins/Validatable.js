@@ -9,20 +9,23 @@ module.exports = {
     },
 
     patchForm: function() {
-        var $form = this.$('form');
+        if(!this.$form) {
+            this.$form = this.$('form');
+        }
 
         // Do not add data-parsley-validate to your forms
         // (C) http://parsleyjs.org/doc/index.html#psly-installation-javascript
-        if($form.attr('data-parsley-validate')) {
+        if(this.$form.attr('data-parsley-validate')) {
             throw new Error('Please, do not add data-parsley-validate attribute on form');
         }
 
         // to anable some validation style from Foundation
         // http://foundation.zurb.com/docs/components/abide.html
-        $form.attr('data-abide', '');
+        this.$form.attr('data-abide', '');
+        this.$form.data('patched', true);
 
         // setup for Foundation Css Framework
-        this._parsley = $form.parsley({
+        this._parsley = this.$form.parsley({
             classHandler: function(ParsleyField) {
                 return ParsleyField.$element.parent();
             },
@@ -33,7 +36,7 @@ module.exports = {
     },
 
     isFormPatched: function() {
-        return !!this._parsley;
+        return this.$form && this.$form.data('patched');
     },
 
     getValidator: function() {
