@@ -9,17 +9,22 @@ describe('DOMComposer', function() {
     var regions;
 
     beforeEach(function() {
-        stubView = function(data)
-        {
+        stubView = function(data) {
             if(!stubView.called) {
                 stubView.called = 0;
             }
-            var Obj = function() {};
+            if(!stubView.options) {
+                stubView.options = [];
+            }
+            var Obj = function(options) {
+                stubView.options.push([].slice.call(arguments));
+            };
             Obj.prototype.render = function() {stubView.called++;};
             Obj.prototype.$el = data;
 
             return Obj;
         };
+
         regions = ['#DOMComposer_test1', '#DOMComposer_test2'];
 
         $('body').append('<div id="'+regions[0].slice(1)+'" />');
@@ -56,5 +61,20 @@ describe('DOMComposer', function() {
 
         assert.equal(stubView.called, 2);
         assert.equal($(regions[0]).html(), 'test1test2');
+    });
+
+    it('should accept views options', function() {
+        var expected = {foo: 'bar'};
+        var composer = Composer({
+            regions: {
+                '#DOMComposer_test1': [
+                    [stubView('test1'), expected]
+                ],
+            }
+        });
+
+        composer.compose();
+
+        assert.deepEqual(stubView.options[0][0], expected);
     });
 });
