@@ -6,8 +6,8 @@ function setPrivateMethods()
 {
     var formInstance;
 
-    this.renderForm = function(e) {
-        var $target = Backbone.$(e.target);
+    this.renderForm = function(event) {
+        var $target = Backbone.$(event.target);
         if(!this.$el.add($target).hasClass('js-edit')) {
             return;
         }
@@ -17,7 +17,7 @@ function setPrivateMethods()
             return;
         }
         
-        e.preventDefault();
+        event.preventDefault();
 
         if(this.isFormRendered()) {
             return;
@@ -33,6 +33,24 @@ function setPrivateMethods()
         this.$formRenderTarget.append(formInstance.$el);
 
         formInstance.$('input,textarea').eq(0).focus();
+
+        this.listenToTransitions(formInstance);
+    };
+
+    this.listenToTransitions = function(formInstance) {
+        var transitionEndEvents = 'transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd';
+        formInstance.$el
+            .addClass('active')
+            .on(transitionEndEvents, function() {
+                if(!formInstance.$el.hasClass('active')) {
+                    formInstance.remove();
+                }
+            })
+            ;
+
+        formInstance.remove = function() {
+            formInstance.$el.removeClass('active');
+        };
     };
 
     this.getFormInstance = function() {

@@ -11,7 +11,7 @@ Backbone.$ = require('jquery');
 var model = new Backbone.Model();
 var FormStub = BaseFormView.extend({
     render: function() {
-        this.$el.append(Backbone.$('<form id="form"><input type="text"></form>'));
+        this.$el.append(Backbone.$('<form id="form"><input type="text"><span class="js-cancel"></span></form>'));
     },
     collection: {
         create: function(newModel, options) {options.success();}
@@ -115,6 +115,38 @@ describe('Editable', function() {
             assert.equal(
                 Backbone.$('#form').parent().parent()[0].tagName,
                 'BODY'
+                );
+        });
+
+        it('should add .active class after append', function() {
+            view.$el.addClass('js-edit');
+
+            view.$el.click();
+
+            assert.ok(view.$('#form').parent().hasClass('active'));
+        });
+
+        it('should remove .active after .js-cancel or .js-remove called and transition ended', function() {
+            view.$el.addClass('js-edit');
+            view.$el.click();
+            var $container = view.$('#form').parent();
+
+            assert.ok(
+                $container.hasClass('active'),
+                '.active should stay before click'
+                );
+
+            view.$('.js-cancel').click();
+            // TODO: test before transition
+            // assert.ok(
+            //     $container.hasClass('active'),
+            //     '.active should stay on click'
+            //     );
+
+            $container.trigger('transitionend');
+            assert.notOk(
+                $container.hasClass('active'),
+                'there should be no .active on transition end'
                 );
         });
 
