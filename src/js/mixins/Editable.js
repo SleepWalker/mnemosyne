@@ -1,4 +1,5 @@
 var Backbone = require('backbone');
+var _ = require('underscore');
 var BaseFormView = require('../views/BaseFormView');
 
 function setPrivateMethods()
@@ -29,7 +30,7 @@ function setPrivateMethods()
 
         formInstance.render();
 
-        this.$el.append(formInstance.$el);
+        this.$formRenderTarget.append(formInstance.$el);
 
         formInstance.$('input,textarea').eq(0).focus();
     };
@@ -48,7 +49,7 @@ var Editable = {
         'click.editableMixin': 'renderForm',
     },
 
-    initialize: function() {
+    initialize: function(options) {
         if(!this.formView) {
             throw Error('The view should have `formView` property');
         }
@@ -56,6 +57,12 @@ var Editable = {
         if(!(this.formView.prototype instanceof BaseFormView)) {
             throw Error('The `formView` property value should be of type BaseFormView');
         }
+
+        _.defaults(this, {
+            $formRenderTarget: this.$el
+        });
+        _.extend(this, _.pick(options, '$formRenderTarget'));
+        this.$formRenderTarget = Backbone.$(this.$formRenderTarget);
 
         setPrivateMethods.apply(this);
     },

@@ -60,6 +60,10 @@ describe('Editable', function() {
     });
 
     describe('should listen to .js-edit clicks', function() {
+        afterEach(function() {
+            view.remove();
+        });
+
         it('should not render if no .js-edit', function() {
             view.$el.click();
             assert.equal(
@@ -98,6 +102,22 @@ describe('Editable', function() {
             assert.equal(view.$el.children().length, 2);
         });
 
+        it('should render in container specified', function() {
+            var view = new View({
+                $formRenderTarget: 'body',
+            });
+            view.render();
+            view.$el.addClass('js-edit');
+            Backbone.$('body').append(view.$el);
+
+            view.$el.click().click();
+
+            assert.equal(
+                Backbone.$('#form').parent().parent()[0].tagName,
+                'BODY'
+                );
+        });
+
         describe('should interact with BaseFormView on click', function() {
             beforeEach(function() {
                 view.$el.addClass('js-edit');
@@ -118,7 +138,7 @@ describe('Editable', function() {
                 assert.ok(form.removeOnSave);
             });
 
-            it('should be editable after form first time removed', function() {
+            it('should be editable after for the second time too', function() {
                 view.getFormInstance().saveModel();
 
                 view.$el.click();
