@@ -47,7 +47,7 @@ var BaseFormView = Backbone.View.extend({
 
     events: {
         'submit form': 'saveModel',
-        'click .js-destroy': 'destroyModel'
+        'click .js-destroy': 'destroyModel',
     },
 
     initialize: function(options)
@@ -110,13 +110,11 @@ var BaseFormView = Backbone.View.extend({
 
         this.patchModel(this.getModel());
 
-        // we should not change model, if the form filled with errors
         if(!model.isValid()) {
             return false;
         }
 
         var formFields = this.inputs().serializeArray();
-
         Backbone.$.each(formFields, function(index, field) {
             model.set(field.name, field.value);
         });
@@ -151,7 +149,7 @@ var BaseFormView = Backbone.View.extend({
         }
     },
 
-    beforeSave: _.noop,
+    beforeSave: function() {return true;},
     afterSave: _.noop,
 
     destroyModel: function(event) {

@@ -184,12 +184,11 @@ describe('PersonCardForm (integration test with PersonCardView)', function(){
 
         it('the Contact should be destroyable separatly from Person', function() {
             view.render();
-            view.remove = sinon.spy();
             Backbone.$('body').append(view.el);
 
             view.$('form form .js-destroy').click();
 
-            assert.notOk(view.remove.called);
+            assert.notOk(view.$el.parent().length === 0);
             assert.equal(Backbone.$('form').length, 1);
         });
     });
