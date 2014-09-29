@@ -24,7 +24,6 @@ describe('ContactManageFormItem', function() {
     });
     
     it('should be deletable', function() {
-
         view.render();
 
         assert.equal(view.$('.js-destroy').length, 1);

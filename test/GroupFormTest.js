@@ -49,14 +49,23 @@ describe('GroupForm', function(){
         assert.ok(view.getModel().save.called);
     });
 
-    it('should be deletable', function() {
+    it('should be cancelable', function() {
         view.render();
         Backbone.$('body').append(view.$el);
         
-        view.$('.js-destroy').click();
+        view.$('.js-cancel').click();
         
-        assert.equal(collection.length, 0,
-            'Model should be destroyed'
-            );
+        assert.equal(view.$el.parent().length, 0);
     });
+
+    // it('should be deletable', function() {
+    //     view.render();
+    //     Backbone.$('body').append(view.$el);
+        
+    //     view.$('.js-destroy').click();
+        
+    //     assert.equal(collection.length, 0,
+    //         'Model should be destroyed'
+    //         );
+    // });
 });

@@ -48,6 +48,7 @@ var BaseFormView = Backbone.View.extend({
     events: {
         'submit form': 'saveModel',
         'click .js-destroy': 'destroyModel',
+        'click.t .js-cancel': 'removeViewHandler'
     },
 
     initialize: function(options)
@@ -122,9 +123,9 @@ var BaseFormView = Backbone.View.extend({
         return true;
     },
 
-    saveModel: function(e) {
-        if(e) {
-            e.preventDefault();
+    saveModel: function(event) {
+        if(event) {
+            event.preventDefault();
         }
 
         if(!this.populateModel()) {
@@ -164,6 +165,14 @@ var BaseFormView = Backbone.View.extend({
         }
 
         this.getModel().destroy(saveOptions);
+    },
+
+    removeViewHandler: function(event) {
+        if(event) {
+            event.preventDefault();
+        }
+
+        this.remove();
     }
 });
 
