@@ -7,6 +7,7 @@ var PersonCardList = Backbone.View.extend({
 
     collection: require('../collections/PersonCollection'),
     itemView: require('../views/PersonCardView'),
+    itemRenderDelay: 100,
 
     initialize: function(options)
     {
@@ -24,6 +25,8 @@ var PersonCardList = Backbone.View.extend({
 
     renderItems: function() {
         this.collection.forEach($.proxy(this.addItem, this));
+
+        this.showDelayed();
     },
 
     addItem: function(model) {
@@ -33,9 +36,25 @@ var PersonCardList = Backbone.View.extend({
 
         view.render();
 
-        view.$el.addClass('display');
-
         this.$el.append(view.el);
+    },
+
+    /**
+     * Recursively with delay applies .display class
+     * for animation purposes
+     */
+    // TODO: move into separate unit
+    showDelayed: function($next) {
+        setTimeout(Backbone.$.proxy(function() {
+            if(!$next) {
+                $next = this.$el.children().first();
+            }
+            $next.addClass('display');
+            $next = $next.next();
+            if($next.length > 0) {
+                this.showDelayed($next);
+            }
+        }, this), this.itemRenderDelay);
     }
 });
 

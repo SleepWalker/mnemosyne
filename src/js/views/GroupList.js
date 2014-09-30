@@ -6,6 +6,7 @@ var GroupList = Backbone.View.extend({
     collection: require('../collections/GroupCollection'),
     itemView: require('../views/GroupItemView'),
     itemViewOptions: {},
+    itemRenderDelay: 50,
 
     initialize: function(options)
     {
@@ -32,6 +33,10 @@ var GroupList = Backbone.View.extend({
 
     renderItems: function() {
         this.collection.forEach(Backbone.$.proxy(this.renderItem, this));
+
+        // 1ms to get into async flow and let mixins and derivatives
+        // to init their stuff
+        this.showDelayed();
     },
 
     renderItem: function(model, where) {
@@ -46,12 +51,28 @@ var GroupList = Backbone.View.extend({
 
         view.render();
 
-        view.$el.addClass('display');
-
         this.$el[where](view.el);
 
         return view;
     },
+
+    /**
+     * Recursively with delay applies .display class
+     * for animation purposes
+     */
+    // TODO: move into separate unit
+    showDelayed: function($next) {
+        setTimeout(Backbone.$.proxy(function() {
+            if(!$next) {
+                $next = this.$el.children().first();
+            }
+            $next.addClass('display');
+            $next = $next.next();
+            if($next.length > 0) {
+                this.showDelayed($next);
+            }
+        }, this), this.itemRenderDelay);
+    }
 });
 
 module.exports = GroupList;
