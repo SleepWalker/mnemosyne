@@ -13,7 +13,7 @@ var PersonCollection = Backbone.Collection.extend({
     comparator: 'surname',
 
     setGroupCriterium: function(groupId) {
-        searchCriterium.groupId = groupId ? groupId : null;
+        searchCriterium.groupId = groupId || groupId === '' ? groupId : null;
 
         this.triggerSearch();
     },

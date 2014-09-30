@@ -223,6 +223,20 @@ describe('PersonCardView', function(){
 
                 assert.ok(result);
             });
+
+            it('should apply filter for `no group` persons', function() {
+                var expected = '';
+                model.set('groupId', expected);
+                
+                var result = view.isGroupCriteriumApplies({groupId: expected});
+                assert.ok(result);
+
+                model.set('groupId', 'hasGroup');
+                
+                result = view.isGroupCriteriumApplies({groupId: expected});
+                assert.notOk(result);
+
+            });
         });
 
         describe('#isTextCriteriumApplies()', function() {

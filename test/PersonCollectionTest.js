@@ -20,54 +20,64 @@ describe('PersonCollection', function() {
         assert.equal(collection.at(0).get('surname'), 'a');
     });
 
-    it('should trigger `search` event, when group search criterium changed', function() {
-        var called = false;
-        collection.on('search', function() {
-            called = true;
+    describe('search', function() {
+        it('should trigger `search` event, when group search criterium changed', function() {
+            var called = false;
+            collection.on('search', function() {
+                called = true;
+            });
+
+            collection.setGroupCriterium('groupId');
+
+            assert.ok(called);
         });
 
-        collection.setGroupCriterium('groupId');
+        it('should trigger `search` event, when search text changed', function() {
+            var called = false;
+            collection.on('search', function() {
+                called = true;
+            });
 
-        assert.ok(called);
-    });
+            collection.setTextCriterium('text');
 
-    it('should trigger `search` event, when search text changed', function() {
-        var called = false;
-        collection.on('search', function() {
-            called = true;
+            assert.ok(called);
         });
 
-        collection.setTextCriterium('text');
+        it('should filter the persons without group', function() {
+            var expected = '';
 
-        assert.ok(called);
-    });
+            collection.setGroupCriterium(expected);
 
-    it('#getCriterium should return current search criterium', function() {
-        var expected = {
-            groupId: 'group123',
-            text: 'test text',
-        };
-
-        collection.setGroupCriterium(expected.groupId);
-        collection.setTextCriterium(expected.text);
-
-        assert.deepEqual(collection.getCriterium(), expected);
-    });
-
-    it('it should pass criterium to event handler', function() {
-        var expected = {
-            groupId: 'group123',
-            text: 'test text',
-        };
-
-        var actual = false;
-        collection.on('search', function(criterium) {
-            actual = criterium;
+            assert.strictEqual(collection.getCriterium().groupId, expected);
         });
 
-        collection.setGroupCriterium(expected.groupId);
-        collection.setTextCriterium(expected.text);
+        it('#getCriterium should return current search criterium', function() {
+            var expected = {
+                groupId: 'group123',
+                text: 'test text',
+            };
 
-        assert.deepEqual(actual, expected);
+            collection.setGroupCriterium(expected.groupId);
+            collection.setTextCriterium(expected.text);
+
+            assert.deepEqual(collection.getCriterium(), expected);
+        });
+
+        it('should pass criterium to event handler', function() {
+            var expected = {
+                groupId: 'group123',
+                text: 'test text',
+            };
+
+            var actual = false;
+            collection.on('search', function(criterium) {
+                actual = criterium;
+            });
+
+            collection.setGroupCriterium(expected.groupId);
+            collection.setTextCriterium(expected.text);
+
+            assert.deepEqual(actual, expected);
+        });
     });
 });

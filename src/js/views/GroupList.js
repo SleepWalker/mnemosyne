@@ -5,6 +5,7 @@ var GroupList = Backbone.View.extend({
 
     collection: require('../collections/GroupCollection'),
     itemView: require('../views/GroupItemView'),
+    itemViewOptions: {},
 
     initialize: function(options)
     {
@@ -18,10 +19,11 @@ var GroupList = Backbone.View.extend({
         this.$el.empty();
 
         var noGroupItem = new this.collection.model({
-            name: 'No Group (todo)',
+            name: 'No Group',
         });
 
-        this.renderItem(noGroupItem);
+        var view = this.renderItem(noGroupItem);
+        view.$el.addClass('js-no-group');
 
         this.renderItems();
 
@@ -35,15 +37,20 @@ var GroupList = Backbone.View.extend({
     renderItem: function(model, where) {
         where = 'string' == typeof where ? where : 'append';
 
-        var view = new this.itemView({
-            model: model
-        });
+        var options = Backbone.$.extend({},
+            this.itemViewOptions,
+            {model: model}
+            );
+
+        var view = new this.itemView(options);
 
         view.render();
 
         view.$el.addClass('display');
 
         this.$el[where](view.el);
+
+        return view;
     },
 });
 

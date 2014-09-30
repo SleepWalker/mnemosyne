@@ -28,9 +28,13 @@ require('backbone.cocktail').mixin(module.exports, {
             name: 'All Groups',
         });
 
-        this.renderItem(allGroupsItem, 'prepend');
 
-        this.$('li').eq(0).addClass('active');
+        var view = this.renderItem(allGroupsItem, 'prepend');
+
+        view.$el
+            .addClass('active')
+            .addClass('js-all')
+            ;
 
         return this;
     }

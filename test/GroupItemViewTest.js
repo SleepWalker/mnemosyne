@@ -99,17 +99,53 @@ describe('GroupView', function() {
 
             $el.click();
 
+            assert.ok(
+                personCollection.setGroupCriterium.calledOnce,
+                'Should be called once'
+                );
+
             assert.ok(personCollection.setGroupCriterium.calledWith(
                 collection.last().id
                 ));
         });
 
-        it('should disable criterium when the first child clicked', function() {
-            var $el = view.$('li').eq(0);
+        it('should disable criterium when the .js-all clicked', function() {
+            var $el = view.$('.js-all').eq(0);
 
             $el.click();
+
             assert.ok(
-                personCollection.setGroupCriterium.calledWith(null)
+                personCollection.setGroupCriterium.calledOnce,
+                'Should be called once'
+                );
+
+            assert.ok(
+                personCollection.setGroupCriterium.calledWithExactly(null)
+                );
+        });
+
+        it('should set `no group` criterium when the .js-no-group child clicked', function() {
+            var $el = view.$('.js-no-group').eq(0);
+
+            $el.click();
+
+            assert.ok(
+                personCollection.setGroupCriterium.calledOnce,
+                'Should be called once'
+                );
+
+            assert.ok(
+                personCollection.setGroupCriterium.calledWithExactly('')
+                );
+        });
+
+        it('should set `no group` criterium when the CHILDREN of .js-no-group clicked', function() {
+            var $el = view.$('.js-no-group').children().eq(0);
+
+            $el.click();
+
+            assert.ok(
+                personCollection.setGroupCriterium.calledWithExactly('')
                 );
         });
     });

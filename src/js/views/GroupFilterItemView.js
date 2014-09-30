@@ -11,8 +11,13 @@ var GroupFilterItemView = GroupItemView.extend({
         'click': 'setCriterium',
     },
 
-    setCriterium: function() {
+    setCriterium: function(event) {
         var id = this.model.id ? this.model.id : null;
+
+        if(!id && Backbone.$(event.target).closest('.js-no-group').length) {
+            id = '';
+        }
+        
         personCollection.setGroupCriterium(id);
     },
 });
