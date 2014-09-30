@@ -4,12 +4,18 @@
 @import "foundation-settings";
 @import "foundation";
 
-$aside-width: 200px;
+@import "font-awesome/variables";
+@import "font-awesome/font";
+@import "font-awesome/mixins";
+
+$aside-width: 205px;
 
 @import "layout";
 
 @import "person-cards";
 @import "groups";
+
+@import "buttons";
 
 html,
 body {
@@ -26,5 +32,44 @@ body {
 
     li {
         @include dropdown-style;
+    }
+}
+
+.user {
+    .user-name,
+    .user-form {
+        @include transition(opacity .4s);
+    }
+
+    .user-form {
+        height: $topbar-height;
+        margin-top: -$topbar-height;
+        opacity: 0;
+    }
+
+    .user-name {
+        opacity: 1;
+    }
+
+    &:hover {
+        .user-name {
+            opacity: 0;
+        }
+
+        .user-form {
+            opacity: 1;
+        }
+    }
+
+    .row {
+        width: 110px;
+        display: inline-block;
+        vertical-align: middle;
+        height: 30px;
+    }
+
+    .icon-ok {
+        width: 35px;
+        height: 30px;
     }
 }

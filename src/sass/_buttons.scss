@@ -1,0 +1,60 @@
+%button-icon {
+    left: -6px;
+    position: relative;
+}
+
+.button-ok {
+    &:before {
+        @extend %button-icon;
+        @include fa-icon($fa-check);
+    }
+}
+
+.button-cancel {
+    &:before {
+        @extend %button-icon;
+        @include fa-icon($fa-close);
+    }
+}
+
+.button-user {
+    &:before {
+        @extend %button-icon;
+        @include fa-icon($fa-user);
+    }
+}
+
+%base-icon {
+    &:before {
+        font-size: 1rem !important;
+    }
+
+    font-size: 0 !important;
+    text-align: center;
+    padding: rem-calc(5px);
+    margin: 0;
+}
+
+.icon-ok {
+    &:before {
+        @include fa-icon($fa-check);
+    }
+
+    @extend %base-icon;
+}
+
+.icon-destroy {
+    &:before {
+        @include fa-icon($fa-trash);
+    }
+
+    @extend %base-icon;
+}
+
+.icon-edit {
+    &:before {
+        @include fa-icon($fa-pencil);
+    }
+
+    @extend %base-icon;
+}

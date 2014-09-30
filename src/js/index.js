@@ -53,8 +53,12 @@ App.configure({
         storage: require('./persistance/Storage').setStorage(new WebStorage()),
         composer: require('./dom/DOMComposer')({
             regions: {
-                '#region-groups': require('./views/GroupFilterList'),
-                '#region-group-add': require('./views/GroupAddAction'),
+                '#region-groups': [
+                    [require('./views/GroupFilterList'), {itemViewOptions: {$formRenderTarget: '#region-groups'}}]
+                ],
+                '#region-group-add': [
+                    [require('./views/GroupAddAction'), {$formRenderTarget: '#region-groups'}]
+                ],
                 '#region-search': require('./views/SearchForm'),
                 '#region-person-cards': [
                     require('./views/PersonCardList')

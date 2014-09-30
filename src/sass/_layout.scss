@@ -13,7 +13,7 @@
 
     overflow-y: auto;
 
-    background: #333;
+    background: $oil;
     color: rgba($white, 0.7);
 }
 
@@ -33,7 +33,24 @@
         text-align: center;
     }
 
+    .title-area {
+        z-index: 1;
+    }
+
     .search-container {
         display: inline-block;
+    }
+}
+
+.github {
+    &:before {
+        @include fa-icon($fa-github);
+        margin-right: 10px;
+    }
+
+    &:hover {
+        // *** foundation uses too long selectors
+        // e.g. `.top-bar .name h1 a`
+        color: $primary-color !important;
     }
 }

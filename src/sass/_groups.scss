@@ -1,17 +1,50 @@
 .group-list {
     @include off-canvas-list();
 
-    li.active a {
-        background-color: $primary-color;
+    li {
+        position: relative;
+        overflow: hidden;
+
+        &.active > a {
+            background-color: $primary-color;
+        }
+
+        &:first-child button,
+        &:nth-child(2) button {
+            display: none;
+        }
+
+        &:hover {
+            .icon-edit,
+            .icon-destroy {
+                bottom: rem-calc(12px);
+            }
+        }
     }
 
-    li:first-child button,
-    li:nth-child(2) button {
-        display: none;
+    .icon-edit,
+    .icon-destroy {
+        bottom: -100%;
+        right: rem-calc(10px);
+        position: absolute;
+
+        @include border-radius(100px);
+        width: rem-calc(25px);
+        height: rem-calc(25px);
+
+        @include transition(bottom .2s ease-out);
+    }
+
+    .icon-edit {
+        right: rem-calc(43px);
+        @include transition-delay(.05s);
     }
 }
 
-.tab-bar { @include tab-bar-base; }
+.tab-bar {
+    @include tab-bar-base;
+}
+
 .tab-bar-section { 
     @include tab-bar-section;
 
@@ -25,5 +58,37 @@
         line-height: rem-calc(17px);
         margin: 0;
         padding: rem-calc(0 4px 10px);
+    }
+}
+
+.group-form {
+    width: 100%;
+
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    left: -100%;
+    background: $oil;
+
+    overflow: hidden;
+
+    /* Vertical centering */
+    @include display-flex;
+    @include justify-content(center);
+    @include flex-direction(column);
+
+    @include transition(left .2s ease-out);
+
+    &.active {
+        left: 0;
+    }
+
+    form {
+        padding: 0 20px;
+    }
+
+    .row-buttons {
+        text-align: right;
     }
 }
