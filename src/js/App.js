@@ -29,7 +29,9 @@ function run()
         throw new Error('The app is already running');
     }
 
-    // getComponent('storage').open();
+    if(config.beforeRun) {
+        config.beforeRun();
+    }
     getComponent('composer').compose();
 
     isRunning = true;
@@ -56,10 +58,20 @@ function setComponent(componentName, component)
     return component;
 }
 
+function reload()
+{
+    isRunning = false;
+
+    getComponent('composer').reset();
+
+    run();
+}
+
 var api = {
     hasComponent: hasComponent,
     getComponent: getComponent,
     setComponent: setComponent,
+    reload: reload,
     run: run
 };
 

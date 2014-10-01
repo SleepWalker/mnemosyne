@@ -23,6 +23,8 @@ function setPrivateMethods()
             return;
         }
 
+        this.trigger('beforeFormRender', $target, formInstance);
+
         formInstance = new this.formView({
             model: this.model,
             removeOnSave: true
@@ -34,22 +36,30 @@ function setPrivateMethods()
 
         formInstance.$('input,textarea').eq(0).focus();
 
-        this.listenToTransitions(formInstance);
+        var $button = $target.hasClass('js-edit') ? $target : this.$el;
+        this.listenToTransitions($button);
+
+        this.trigger('afterFormRender', $button, formInstance);
     };
 
-    this.listenToTransitions = function(formInstance) {
+    this.listenToTransitions = function($button) {
         var transitionEndEvents = 'transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd';
-        formInstance.$el
-            .addClass('active')
-            .on(transitionEndEvents, function() {
-                if(!formInstance.$el.hasClass('active')) {
-                    formInstance.remove();
-                }
-            })
-            ;
+        var self = this;
+        
+        formInstance.$el.addClass('active');
 
+        var initialRemove = _.bind(formInstance.remove, formInstance);
         formInstance.remove = function() {
             formInstance.$el.removeClass('active');
+            self.trigger('beforeFormRemove', $button, formInstance);
+
+            formInstance.$el.one(transitionEndEvents, function() {
+                // TODO: a better way to controll multiple transitions
+                setTimeout(function() {
+                    initialRemove();
+                    formInstance = false;
+                    }, 500);
+            });
         };
     };
 
@@ -58,7 +68,7 @@ function setPrivateMethods()
     };
 
     this.isFormRendered = function() {
-        return !!formInstance && Backbone.$.contains(this.el, formInstance.el);
+        return !!formInstance;
     };
 }
 

@@ -5,7 +5,6 @@ var contactTypeDropdown = require('./ContactTypeDropdownList');
 
 var ContactManageForm = Backbone.View.extend({
     className: 'contact-form',
-    style: 'position: relative',
 
     itemView: require('./ContactManageFormItem'),
     template: require('./tpl/contact-manage-form.handlebars'),
@@ -28,6 +27,11 @@ var ContactManageForm = Backbone.View.extend({
         }));
 
         this.$el.append(contactTypeDropdown.$el);
+
+        if(this.$el.css('position') == 'static') {
+            // for drop down menu
+            this.$el.css('position', 'relative');
+        }
         
         if(this.collection && this.collection.length) {
             this.renderItems();

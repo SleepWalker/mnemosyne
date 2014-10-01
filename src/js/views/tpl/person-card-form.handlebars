@@ -1,4 +1,3 @@
-<!-- http://foundation.zurb.com/docs/components/abide.html -->
 <div class="row">
     <input type="text" placeholder="Name *"  aria-label="Name *" id="name" name="name" value="{{name}}" data-parsley-required />
 </div>
@@ -20,7 +19,7 @@
 </div>
 
 <div class="row">
-    <label data-dropdown="#dropdown-group">
+    <label class="two-in-row" data-dropdown="#dropdown-group">
         <span class="prefix">Group</span>
         <input type="text" id="group" name="group" value="{{group}}" readonly />
     </label>
@@ -29,7 +28,7 @@
 
 <div class="row" id="person-contacts"></div>
 
-<div class="row">
-    <button type="submit">Done</button>
-    <a href="#" class="js-destroy">destroy</a>
+<div class="row row-buttons align-right">
+    <button class="button-ok" type="submit">Done</button>
+    <a href="#" class="button button-cancel alert js-cancel">Cancel</a>
 </div>

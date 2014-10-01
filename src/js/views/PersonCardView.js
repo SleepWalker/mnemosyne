@@ -110,5 +110,6 @@ module.exports = PersonCardView;
 // mixing in some basic behavior
 require('backbone.cocktail').mixin(module.exports,
     require('../mixins/Deletable'),
-    require('../mixins/Editable')
+    require('../mixins/Editable'),
+    require('../mixins/Morph')
     );

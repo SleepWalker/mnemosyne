@@ -1,3 +1,16 @@
-<h1>{{surname}}</h1>
-<p>{{name}}</p>
-<a href="#" class="js-destroy">destroy</a>
+<div class="short-info">
+    <h3>{{surname}} {{name}}
+    {{#if organization}}
+        <br><small>{{organization}}
+        {{#if position}}
+             — {{position}}
+        {{/if}}</small>
+    {{/if}}
+    </h3>
+    <div>
+        {{#each contacts}}
+            <span class="icon-{{type}}"></span>{{value}}<br>
+        {{/each}}
+    </div>
+    <a href="#" class="button alert icon-destroy js-destroy">destroy</a>
+</div>

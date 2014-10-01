@@ -1,0 +1,67 @@
+.two-in-row {
+    * {
+        display: inline-block;
+    }
+
+    span {
+        width: 30%;
+        float: left;
+    }
+    
+    input {
+        width: 70%;
+    }
+}
+
+.contacts-container form {
+    margin-bottom: 16px;
+
+    * {
+        display: inline-block;
+        width: 10%;
+        margin-bottom: 0;
+        vertical-align: middle;
+    }
+
+    .icon-destroy {
+        width: 25px;
+        height: 35px;
+        line-height: 35px;
+    }
+
+    input {
+        width: 40%;
+    }
+}
+
+.contacts-actions {
+    .button {
+        width: 100%;
+    }
+}
+
+.top-bar {
+    .person-form {
+        input {
+            margin-bottom: 10px;
+            height: 2.3125rem;
+        }
+
+        .two-in-row span {
+            top: 7px;
+        }
+    }
+
+    .contacts-container {
+        form * {
+            vertical-align: inherit;
+        }
+    }
+
+    .contacts-actions .button.dropdown {
+        position: relative !important;
+        height: 40px;
+        line-height: 40px;
+        margin-bottom: 10px;
+    }
+}

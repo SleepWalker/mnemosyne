@@ -1,12 +1,12 @@
 var Backbone = require('backbone');
 
-// TODO: group field on focus -> click (to show dd)
+// TODO: group field on focus() -> click() on it to show dd
 
 var BaseFormView = require('./BaseFormView');
 var groupDropdown = require('./GroupDropdownView');
 
 var PersonCardForm = BaseFormView.extend({
-    className: 'persons-form',
+    className: 'person-form',
     collection: require('../collections/PersonCollection'),
     template: require('./tpl/person-card-form.handlebars'),
     contactsForm: require('./ContactManageForm'),
@@ -21,7 +21,11 @@ var PersonCardForm = BaseFormView.extend({
     },
 
     renderDropDown: function() {
-        this.$el.css({position: 'relative'});
+        if(this.$el.css('position') == 'static') {
+            // for drop down menu
+            this.$el.css('position', 'relative');
+        }
+
         this.$el.append(groupDropdown.$el);
         this.listenTo(groupDropdown, 'change', this.onChangeHandler);
     },

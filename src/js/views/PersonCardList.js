@@ -7,7 +7,8 @@ var PersonCardList = Backbone.View.extend({
 
     collection: require('../collections/PersonCollection'),
     itemView: require('../views/PersonCardView'),
-    itemRenderDelay: 100,
+    itemViewOptions: {},
+    itemRenderDelay: 20,
 
     initialize: function(options)
     {
@@ -24,19 +25,31 @@ var PersonCardList = Backbone.View.extend({
     },
 
     renderItems: function() {
-        this.collection.forEach($.proxy(this.addItem, this));
+        var addItem = $.proxy(this.addItem, this);
+        this.collection.forEach(function(model) {
+            addItem(model, true);
+        });
 
         this.showDelayed();
     },
 
-    addItem: function(model) {
-        var view = new this.itemView({
-            model: model
-        });
+    addItem: function(model, doNotDisplay) {
+        var options = Backbone.$.extend({},
+            this.itemViewOptions,
+            {model: model}
+            );
+        
+        var view = new this.itemView(options);
 
         view.render();
-
+        
         this.$el.append(view.el);
+
+        if(doNotDisplay !== true) {
+            view.$el.addClass('display');
+        }
+
+        return view;
     },
 
     /**

@@ -58,3 +58,41 @@
 
     @extend %base-icon;
 }
+
+/**
+ * Contacts icons
+ */
+%contact-icon-base {
+    font-size: 1rem !important;
+    margin-right: 5px;
+}
+.icon-phone {
+    &:before {
+        @include fa-icon($fa-phone);
+        @extend %contact-icon-base;
+    }
+}
+.icon-email {
+    &:before {
+        @include fa-icon($fa-at);
+        @extend %contact-icon-base;
+    }
+}
+.icon-address {
+    &:before {
+        @include fa-icon($fa-map-marker);
+        @extend %contact-icon-base;
+    }
+}
+.icon-custom {
+    &:before {
+        @include fa-icon($fa-magic);
+        @extend %contact-icon-base;
+    }
+}
+.icon-url {
+    &:before {
+        @include fa-icon($fa-link);
+        @extend %contact-icon-base;
+    }
+}

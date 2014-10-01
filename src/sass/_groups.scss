@@ -80,10 +80,7 @@
 
     overflow: hidden;
 
-    /* Vertical centering */
-    @include display-flex;
-    @include justify-content(center);
-    @include flex-direction(column);
+    @include flex-centre();
 
     @include transition(left .2s ease-out);
 

@@ -27,7 +27,7 @@
     top:0;
     right: 0;
     left: $aside-width;
-    z-index: 1;
+    z-index: 3;
 
     .top-bar-section {
         text-align: center;
@@ -35,10 +35,6 @@
 
     .title-area {
         z-index: 1;
-    }
-
-    .search-container {
-        display: inline-block;
     }
 }
 

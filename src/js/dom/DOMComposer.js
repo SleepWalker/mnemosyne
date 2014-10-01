@@ -1,14 +1,23 @@
 var $ = require('jquery');
 
 module.exports = function(options) {
+    function eachRegion(callback) {
+        var regions = options.regions;
+        var regionViews;
+
+        for(var selector in regions) {
+            regionViews = regions[selector];
+
+            callback(selector, regionViews);
+        }
+    }
+
     return {
         compose: function compose() {
-            var BackboneView;
-            var viewOptions;
-            var regions = options.regions;
+            eachRegion(function(selector, regionViews) {
+                var BackboneView;
+                var viewOptions;
 
-            for(var selector in regions) {
-                var regionViews = regions[selector];
                 if(!(regionViews instanceof Array)) {
                     regionViews = [regionViews];
                 }
@@ -26,7 +35,13 @@ module.exports = function(options) {
 
                     $(selector).append(BackboneView.$el);
                 }
-            }
+            });
+        },
+
+        reset: function() {
+            eachRegion(function(selector) {
+                $(selector).empty();
+            });
         }
     };
 };

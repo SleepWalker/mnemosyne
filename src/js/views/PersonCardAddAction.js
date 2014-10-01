@@ -19,5 +19,6 @@ module.exports = PersonCardAddAction;
 
 // mixing in some basic behavior
 require('backbone.cocktail').mixin(module.exports,
-    require('../mixins/Editable')
+    require('../mixins/Editable'),
+    require('../mixins/Morph')
     );

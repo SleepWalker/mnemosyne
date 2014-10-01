@@ -22,6 +22,7 @@ var Contact = Backbone.Model.extend({
         return this.availableTypes[this.get('type')] || {};
     },
 
+    // TODO: validation
     availableTypes: {
         email: {
             label: 'Email',

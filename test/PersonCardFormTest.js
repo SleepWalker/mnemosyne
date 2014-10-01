@@ -142,12 +142,20 @@ describe('PersonCardForm (integration test with PersonCardView)', function(){
             assert.ok(view.$el.parent().length === 0);
         });
 
-        it('should destroy model on js-destroy click', function() {
-            view.getModel().destroy = sinon.spy();
+        // it('should destroy model on js-destroy click', function() {
+        //     view.getModel().destroy = sinon.spy();
 
-            view.$('.js-destroy').last().click();
+        //     view.$('.js-destroy').last().click();
 
-            assert.ok(view.getModel().destroy.calledOnce);
+        //     assert.ok(view.getModel().destroy.calledOnce);
+        // });
+
+        it('should remove view on js-cancel click', function() {
+            Backbone.$('body').append(view.$el);
+
+            view.$('.js-cancel').last().click();
+
+            assert.ok(view.$el.parent().length === 0);
         });
     });
 

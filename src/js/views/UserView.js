@@ -4,6 +4,7 @@ var _ = require('underscore');
 
 var Storage = require('../persistance/Storage');
 var WebStorage = require('../persistance/WebStorage');
+var App = require('../App');
 
 var UserView = Backbone.View.extend({
     className: 'user has-form',
@@ -39,6 +40,10 @@ var UserView = Backbone.View.extend({
         var storageId = this.$('[name=storageId]').val();
 
         Storage.setStorage(new WebStorage(storageId));
+
+        // TODO: cookie support
+
+        App.reload();
 
         this.render();
     }

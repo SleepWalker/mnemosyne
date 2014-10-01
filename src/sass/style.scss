@@ -8,14 +8,22 @@
 @import "font-awesome/font";
 @import "font-awesome/mixins";
 
+@mixin flex-centre() {
+    /* Vertical centering */
+    @include display-flex;
+    @include justify-content(center);
+    @include flex-direction(column);
+}
+
 $aside-width: 205px;
 
 @import "layout";
 
 @import "person-cards";
+@import "person-card-form";
 @import "groups";
 
-@import "buttons";
+@import "icons";
 
 html,
 body {
@@ -72,4 +80,8 @@ body {
         width: 35px;
         height: 30px;
     }
+}
+
+.align-right {
+    text-align: right;
 }

@@ -7,8 +7,6 @@
 // http://tympanus.net/Tutorials/PagePreloadingEffect/
 // http://tympanus.net/Development/SidebarTransitions/
 // http://tympanus.net/Development/GridLoadingEffects/index3.html
-// http://tympanus.net/Development/ButtonComponentMorph/index3.html
-
 
 // Init Backbone jQuery relation
 var Backbone = require('backbone');
@@ -17,38 +15,11 @@ Backbone.$ = require('jquery');
 var App = require('./App');
 var WebStorage = require('./persistance/WebStorage');
 
-
-/**
- * LOREMIMPSUM
- */
-var collection = require('./collections/PersonCollection');
-collection.add([{
-    'id': 'test',
-    name: 'test',
-    surname: 'zz3',
-    group: 'testGroup',
-    groupId: 'one'
-}, {
-    id: 'test22',
-    name: 'test22',
-    surname: 'zz2',
-    group: 'testGroup22',
-    groupId: 'two'
-}]);
-
-var collection = require('./collections/GroupCollection');
-collection.add([{
-    name: 'testGroup',
-    id: 'one',
-}, {
-    id: 'two',
-    name: 'testGroup22'
-}]);
-/**
- * /LOREMIMPSUM
- */
-
 App.configure({
+    beforeRun: function() {
+        require('./collections/PersonCollection').fetch();
+        require('./collections/GroupCollection').fetch();
+    },
     components: {
         storage: require('./persistance/Storage').setStorage(new WebStorage()),
         composer: require('./dom/DOMComposer')({
@@ -61,7 +32,7 @@ App.configure({
                 ],
                 '#region-search': require('./views/SearchForm'),
                 '#region-person-cards': [
-                    require('./views/PersonCardList')
+                    [require('./views/PersonCardList'), {itemViewOptions: {$formRenderTarget: 'body'}}]
                 ],
                 '#region-person-add': require('./views/PersonCardAddAction'),
                 '#region-user': require('./views/UserView'),
