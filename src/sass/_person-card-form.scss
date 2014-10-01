@@ -50,6 +50,12 @@
         .two-in-row span {
             top: 7px;
         }
+
+        .dropdown-menu {
+            li {
+                float: none;
+            }
+        }
     }
 
     .contacts-container {
