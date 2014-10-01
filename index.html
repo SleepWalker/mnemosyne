@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>mnemosyne</title>
+        <link href="/dist/css/style.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="wrapper">
+            <aside class="column-left">
+                <nav class="tab-bar">
+                  <section class="tab-bar-section">
+                    <h1 class="title">Groups</h1>
+                    <div id="region-group-add"></div>
+                  </section>
+                </nav>
+                <div id="region-groups"></div>
+            </aside>
+            <div class="column-right">
+                <nav class="top-bar">
+                    <ul class="title-area">
+                        <li class="name">
+                            <h1><a href="https://github.com/SleepWalker/mnemosyne" class="github" target="_blank">mnemosyne contacts</a></h1>
+                        </li>
+                        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+                    </ul>
+                    <section class="top-bar-section">
+                        <ul class="left">
+                            <li class="divider"></li>
+                            <li class="has-form show-for-large-up" id="region-person-add"></li>
+                        </ul>
+
+                        <ul class="right" id="region-user"></ul>
+
+                        <ul class="right">
+                            <li class="has-form search-container" id="region-search"></li>
+                            <li class="divider"></li>
+                        </ul>
+                    </section>
+                </nav>
+                <div class="persons-cards-container">
+                    <div id="region-person-cards" class="person-cards-grid"></div>
+                </div>
+            </div>
+        </div>
+        <script src="/dist/js/app.min.js" type="text/javascript"></script>
+    </body>
+</html>
