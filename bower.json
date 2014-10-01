@@ -12,5 +12,9 @@
     "node_modules",
     "bower_components",
     "test"
-  ]
+  ],
+  "dependencies": {
+    "perfect-scrollbar": "~0.5.2",
+    "foundation": "zurb/bower-foundation#~5.4.5"
+  }
 }
