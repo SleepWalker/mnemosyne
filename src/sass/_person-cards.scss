@@ -105,10 +105,7 @@ body > .person-form {
 }
 
 .person-form {
-    overflow: {
-        x: hidden;
-        y: auto;
-    }
+    overflow: hidden;
     max-height: 90%;
 
     position: fixed;
