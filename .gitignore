@@ -3,3 +3,4 @@ node_modules
 test/test.bundle.js
 bower_components
 .sass-cache
+dist
