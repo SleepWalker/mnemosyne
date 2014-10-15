@@ -1,0 +1,39 @@
+.user {
+    .user-name,
+    .user-form {
+        @include transition(opacity .4s);
+    }
+
+    .user-form {
+        height: $topbar-height;
+        margin-top: -$topbar-height;
+        opacity: 0;
+    }
+
+    .user-name {
+        opacity: 1;
+    }
+
+    &.active,
+    &:hover {
+        .user-name {
+            opacity: 0;
+        }
+
+        .user-form {
+            opacity: 1;
+        }
+    }
+
+    .row {
+        width: 110px;
+        display: inline-block;
+        vertical-align: middle;
+        height: 30px;
+    }
+
+    .icon-ok {
+        width: 35px;
+        height: 30px;
+    }
+}

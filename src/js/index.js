@@ -4,6 +4,12 @@
 // TODO: Tests for Deletable mixin
 // TODO: Прятать формы по клику на боди и по esc
 
+// Отправка форм по enter
+// если открыть контакт на редактирование, отредактировать добавив новое поле. то при сейве перестает работать morph
+// поправить позиционирование select
+// форма смены юзера не должна пропадать если есть фокус ее элементов
+// символ | должен триммится в веб хранилище
+
 // http://tympanus.net/Tutorials/PagePreloadingEffect/
 // http://tympanus.net/Development/SidebarTransitions/
 // http://tympanus.net/Development/GridLoadingEffects/index3.html
@@ -15,13 +21,17 @@ Backbone.$ = require('jquery');
 var App = require('./App');
 var WebStorage = require('./persistance/WebStorage');
 
+// TODO: этот файл не должен знать о ключе с id хранилища
+var storageId = localStorage.getItem('storageId');
+var storage = storageId ? new WebStorage(storageId) : new WebStorage();
+
 App.configure({
     beforeRun: function() {
         require('./collections/PersonCollection').fetch();
         require('./collections/GroupCollection').fetch();
     },
     components: {
-        storage: require('./persistance/Storage').setStorage(new WebStorage()),
+        storage: require('./persistance/Storage').setStorage(storage),
         composer: require('./dom/DOMComposer')({
             regions: {
                 '#region-groups': [

@@ -11,7 +11,9 @@ var UserView = Backbone.View.extend({
     tagName: 'li',
 
     events: {
-        'click .js-change-storage': 'changeStorage'
+        'click .js-change-storage': 'changeStorage',
+        'focus input': 'makeActive',
+        'blur input': 'makeInactive'
     },
 
     formView: require('./PersonCardForm'),
@@ -41,11 +43,19 @@ var UserView = Backbone.View.extend({
 
         Storage.setStorage(new WebStorage(storageId));
 
-        // TODO: cookie support
+        localStorage.setItem('storageId', storageId);
 
         App.reload();
 
         this.render();
+    },
+
+    makeActive: function() {
+        this.$el.addClass('active');
+    },
+
+    makeInactive: function() {
+        this.$el.removeClass('active');
     }
 });
 
