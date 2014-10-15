@@ -84,11 +84,18 @@ function WebStorage(storageName)
             .join(delimiter)
             .replace(model.id, '')
             .replace(delimiter+delimiter, '')
-            .split(delimiter)
             ;
+        index = trim(index, delimiter).split(delimiter);
         saveIndex(model, index);
 
         return model.toJSON();
+    }
+
+    function trim(str, charlist)
+    {
+        charlist = !charlist ? ' \s\xA0' : charlist.replace(/([\[\]\(\)\.\?\/\*\{\}\+\$\^\:])/g, '\$1');
+        var re = new RegExp('^[' + charlist + ']+|[' + charlist + ']+$', 'g');
+        return str.replace(re, '');
     }
 
     function findModel(id)

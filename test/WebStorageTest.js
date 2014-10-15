@@ -136,10 +136,40 @@ describe('WebStorage', function() {
         });
     });
 
+    describe('auto trim of id separators in index', function() {
+        var model1, model2;
+        beforeEach(function() {
+            localStorage.clear();
+            ws = new WebStorage();
+
+            model1 = new Backbone.Model();
+            model1.collection = {url: 'test'};
+            ws.create(model1);
+
+            model2 = new Backbone.Model();
+            model2.collection = {url: 'test'};
+            ws.create(model2);
+        });
+
+        it('should trim start', function() {
+            ws.destroy(model1);
+            var index = getIndex(model1);
+
+            assert.notEqual(index.slice(0, 1), '|');
+        });
+
+        it('should trim end', function() {
+            ws.destroy(model2);
+            var index = getIndex(model2);
+
+            assert.notEqual(index.slice(-1), '|');
+        });
+    });
+
     function assertModelExist(model)
     {
-        var index = localStorage.getItem(ws.getStorageName() + '-' + model.collection.url);
-        var modelJSON = JSON.parse(localStorage.getItem(ws.getStorageName() + '-' + model.id));
+        var index = getIndex(model);
+        var modelJSON = getModelJSON(model);
 
         assert.equal(index, model.id);
         assert.deepEqual(modelJSON, model.toJSON());
@@ -147,12 +177,20 @@ describe('WebStorage', function() {
 
     function assertModelNotExist(model)
     {
-        var index = localStorage.getItem(ws.getStorageName() + '-' + model.collection.url);
-        var modelJSON = JSON.parse(localStorage.getItem(ws.getStorageName() + '-' + model.id));
+        var index = getIndex(model);
+        var modelJSON = getModelJSON(model);
 
         assert.notEqual(index, model.id);
         assert.equal(modelJSON, null);
     }
+
+    function getIndex(model)
+    {
+        return localStorage.getItem(ws.getStorageName() + '-' + model.collection.url);
+    }
+
+    function getModelJSON(model)
+    {
+        return JSON.parse(localStorage.getItem(ws.getStorageName() + '-' + model.id));
+    }
 });
-// нужно получить все модели определенного класса
-// принадлежащие определенному id
