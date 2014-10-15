@@ -43,6 +43,14 @@
     @extend %base-icon;
 }
 
+.icon-plus {
+    &:before {
+        @include fa-icon($fa-plus);
+    }
+
+    @extend %base-icon;
+}
+
 .icon-destroy {
     &:before {
         @include fa-icon($fa-trash);

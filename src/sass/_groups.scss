@@ -60,10 +60,11 @@
     }
 
     button, .button {
-        font-size: 2rem;
-        line-height: rem-calc(17px);
-        margin: 0;
-        padding: rem-calc(0 4px 10px);
+        padding: {
+            top: rem-calc(7px);
+            left: rem-calc(7px);
+            right: rem-calc(8px);
+        }
     }
 }
 
