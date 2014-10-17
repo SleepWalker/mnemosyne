@@ -1,4 +1,5 @@
 var Backbone = require('backbone');
+var _ = require('underscore');
 
 // TODO: group field on focus() -> click() on it to show dd
 
@@ -11,6 +12,13 @@ var PersonCardForm = BaseFormView.extend({
     template: require('./tpl/person-card-form.handlebars'),
     contactsForm: require('./ContactManageForm'),
     contactCollectionClass: require('../collections/ContactCollection'),
+
+    initialize: function(options)
+    {
+        BaseFormView.prototype.initialize.call(this, options);
+
+        _.extend(this, _.pick(options, 'contactsForm'));
+    },
 
     render: function() {
         BaseFormView.prototype.render.apply(this, [].slice.call(arguments));

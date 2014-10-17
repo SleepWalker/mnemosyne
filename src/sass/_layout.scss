@@ -50,3 +50,20 @@
         color: $primary-color !important;
     }
 }
+
+.l-2columns {
+    &:after {
+        @extend %clear-both;
+    }
+
+    padding: 30px;
+}
+
+.l-2columns-column {
+    float: left;
+    width: 50%;
+
+    &:first-child {
+        padding-right: 30px;
+    }
+}

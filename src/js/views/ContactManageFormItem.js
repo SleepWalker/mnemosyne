@@ -5,7 +5,7 @@ var BaseFormView = require('./BaseFormView');
 
 var ContactManageFormItem = BaseFormView.extend({
     tagName: 'div',
-    className: 'row',
+    className: 'contact-row',
 
     template: require('./tpl/contact-manage-form-item.handlebars'),
 
@@ -18,10 +18,13 @@ var ContactManageFormItem = BaseFormView.extend({
 
     render: function()
     {
+        var model = this.getModel();
         var html = this.template(Backbone.$.extend({
             dropdownId: contactTypeDropdown.el.id,
-            typeLabel: this.getModel().getTypeLabel(),
-            valuePlaceholder: this.getModel().getValuePlaceholder()
+            typeLabel: model.getTypeLabel(),
+            valuePlaceholder: model.getValuePlaceholder(),
+            validatorPattern: model.getValidatorPattern(),
+            validatorType: model.getValidatorType()
         }, this.getModel().toJSON()));
 
         this.wrapInForm(html)

@@ -49,6 +49,12 @@
     }
 
     @extend %base-icon;
+    
+    padding: {
+        top: rem-calc(7px);
+        left: rem-calc(7px);
+        right: rem-calc(8px);
+    }
 }
 
 .icon-destroy {

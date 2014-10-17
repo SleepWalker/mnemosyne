@@ -1,0 +1,56 @@
+.contact-row {
+    width: 352px;
+}
+
+.contacts-container form {
+    margin-bottom: 16px;
+
+    label,
+    input,
+    .contact-type,
+    .contact-value,
+    .icon-destroy {
+        display: inline-block;
+        margin-bottom: 0;
+        vertical-align: middle;
+        position: relative;
+    }
+
+    label {
+        width: 52px;
+        margin-right: 10px; 
+    }
+
+    .icon-destroy {
+        width: 25px;
+        height: 35px;
+        line-height: 35px;
+    }
+
+    .contact-type {
+        width: 100px;
+    }
+
+    .contact-value {
+        width: 150px;
+    }
+
+    small.error {
+        position: absolute;
+        width: 100%;
+        z-index: 1;
+    }
+
+    input:focus {
+        position: relative;
+        z-index: 10;
+    }
+}
+
+.top-bar {
+    .contacts-container {
+        form * {
+            vertical-align: inherit;
+        }
+    }
+}

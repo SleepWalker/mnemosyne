@@ -58,14 +58,6 @@
     > h1 {
         display: inline-block;
     }
-
-    button, .button {
-        padding: {
-            top: rem-calc(7px);
-            left: rem-calc(7px);
-            right: rem-calc(8px);
-        }
-    }
 }
 
 .group-form {
@@ -81,7 +73,7 @@
 
     overflow: hidden;
 
-    @include flex-centre();
+    @extend %flex-centre;
 
     @include transition(left .2s ease-out);
 

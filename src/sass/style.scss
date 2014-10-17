@@ -8,11 +8,17 @@
 @import "font-awesome/font";
 @import "font-awesome/mixins";
 
-@mixin flex-centre() {
+%flex-centre {
     /* Vertical centering */
     @include display-flex;
     @include justify-content(center);
     @include flex-direction(column);
+}
+
+%clear-both {
+    content: '';
+    display: block;
+    clear: both;
 }
 
 $aside-width: 205px;
@@ -21,6 +27,7 @@ $aside-width: 205px;
 
 @import "person-cards";
 @import "person-card-form";
+@import "person-contacts";
 @import "groups";
 @import "user";
 
@@ -33,19 +40,5 @@ body {
     height: 100%;
 }
 
-.dropdown-content {
-    @include dropdown-container($content:list, $triangle:bottom);
-}
 
-.dropdown-menu {
-    list-style: none;
-    margin: 0;
-
-    li {
-        @include dropdown-style;
-    }
-}
-
-.align-right {
-    text-align: right;
-}
+@import "shame";

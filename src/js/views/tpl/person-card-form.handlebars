@@ -1,34 +1,38 @@
-<div class="row">
-    <input type="text" placeholder="Name *"  aria-label="Name *" id="name" name="name" value="{{name}}" data-parsley-required />
-</div>
+<div class="l-2columns">
+    <div class="l-2columns-column">
+        <div class="row">
+            <input type="text" placeholder="Name *"  aria-label="Name *" id="name" name="name" value="{{name}}" data-parsley-required />
+        </div>
 
-<div class="row">
-    <input type="text" placeholder="Surname"  aria-label="Surname" id="surname" name="surname" value="{{surname}}" />
-</div>
+        <div class="row">
+            <input type="text" placeholder="Surname"  aria-label="Surname" id="surname" name="surname" value="{{surname}}" />
+        </div>
 
-<div class="row">
-    <input type="text" placeholder="Birthday"  aria-label="Birthday" id="birthday" name="birthday" value="{{birthday}}" />
-</div>
+        <div class="row">
+            <label class="two-in-row" data-dropdown="#dropdown-group">
+                <span class="prefix">Group</span>
+                <input type="text" id="group" name="group" value="{{group}}" readonly />
+            </label>
+            <input type="hidden" id="groupId" name="groupId" value="{{groupId}}" />
+        </div>
 
-<div class="row">
-    <input type="text" placeholder="Organization"  aria-label="Organization" id="organization" name="organization" value="{{organization}}" />
-</div>
+        <div class="row">
+            <input type="text" placeholder="Birthday"  aria-label="Birthday" id="birthday" name="birthday" value="{{birthday}}" />
+        </div>
 
-<div class="row">
-    <input type="text" placeholder="Position in organisation"  aria-label="Position in organisation" id="position" name="position" value="{{position}}" />
-</div>
+        <div class="row">
+            <input type="text" placeholder="Organization"  aria-label="Organization" id="organization" name="organization" value="{{organization}}" />
+        </div>
 
-<div class="row">
-    <label class="two-in-row" data-dropdown="#dropdown-group">
-        <span class="prefix">Group</span>
-        <input type="text" id="group" name="group" value="{{group}}" readonly />
-    </label>
-    <input type="hidden" id="groupId" name="groupId" value="{{groupId}}" />
-</div>
+        <div class="row">
+            <input type="text" placeholder="Position in organisation"  aria-label="Position in organisation" id="position" name="position" value="{{position}}" />
+        </div>
 
-<div class="row" id="person-contacts"></div>
+        <div class="row row-buttons align-right">
+            <button class="button-ok" type="submit">Done</button>
+            <a href="#" class="button button-cancel alert js-cancel">Cancel</a>
+        </div>
+    </div>
 
-<div class="row row-buttons align-right">
-    <button class="button-ok" type="submit">Done</button>
-    <a href="#" class="button button-cancel alert js-cancel">Cancel</a>
+    <div class="row l-2columns-column" id="person-contacts"></div>
 </div>

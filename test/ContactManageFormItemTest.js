@@ -30,7 +30,7 @@ describe('ContactManageFormItem', function() {
     });
 
     it('should populate model on input change', function() {
-        var expected = 'foo';
+        var expected = '12345';
         view.render();
         Backbone.$('body').append(view.$el);
 

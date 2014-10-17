@@ -60,7 +60,7 @@
             width: 150px;
             height: 100%;
 
-            @include flex-centre();
+            @extend %flex-centre;
             @include transition(right 0.3s ease .2s);
 
             &:before {
@@ -129,8 +129,6 @@ body > .person-form {
     > form {
         visibility: hidden;
         opacity: 0;
-        min-width: 400px;
-        padding: 30px;
         @include transition(opacity .3s ease .6s);
 
         .row {

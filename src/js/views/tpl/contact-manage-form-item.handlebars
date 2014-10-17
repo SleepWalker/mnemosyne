@@ -1,4 +1,12 @@
 <label class="inline">{{typeLabel}}</label>
-<input type="text" name="label" value="{{label}}" placeholder="Home, Work etc." />
-<input type="text" name="value" value="{{value}}" placeholder="{{valuePlaceholder}}" />
+<div class="contact-type">
+    <input type="text" name="label" value="{{label}}" placeholder="Home, Work etc." />
+</div>
+<div class="contact-value">
+    <input type="text" name="value" value="{{value}}" placeholder="{{valuePlaceholder}}" 
+    data-parsley-required="true"
+    {{#if validatorType}} data-parsley-type="{{validatorType}}"{{/if}}
+    {{#if validatorPattern}} data-parsley-pattern="{{validatorPattern}}"{{/if}}
+    />
+</div>
 <a href="#" class="button icon-destroy alert js-destroy">destroy</a>

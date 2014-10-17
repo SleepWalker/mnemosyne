@@ -61,9 +61,15 @@ describe('PersonCardForm (integration test with PersonCardView)', function(){
     });
 
     describe('form interaction', function() {
+        // TODO: most of this tests should be executed on BaseFormWidget
         beforeEach(function() {
             view = new PersonCardForm({
                 model: model,
+                contactsForm: function() {
+                    // we do not need to test validation of contacts form
+                    this.render = function() {};
+                    this.$el = '';
+                }
             });
             collection.add(model);
 
@@ -167,10 +173,11 @@ describe('PersonCardForm (integration test with PersonCardView)', function(){
             view = new PersonCardForm({
                 model: model,
             });
+
+            view.getModel().set('contacts', [contact]);
         });
 
         it('should init ContactColleciton and render Contact form', function() {
-            view.getModel().set('contacts', [contact]);
 
             view.render();
 

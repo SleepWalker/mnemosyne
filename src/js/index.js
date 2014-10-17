@@ -1,6 +1,5 @@
 // TODO: https://github.com/douglascrockford/JSON-js
-// TODO: emulate local storage but tell the user, that the data will be lost
-// 
+ 
 // TODO: Tests for Deletable mixin
 // TODO: Прятать формы по клику на боди и по esc
 
