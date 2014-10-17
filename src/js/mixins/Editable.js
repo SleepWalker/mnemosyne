@@ -7,6 +7,10 @@ function setPrivateMethods()
     var formInstance;
 
     this.renderForm = function(event) {
+        if(Backbone.$(event.target).hasClass('js-edit')) {
+            event.stopPropagation();
+        }
+
         var $target = Backbone.$(event.target);
         if(!this.$el.add($target).hasClass('js-edit')) {
             return;

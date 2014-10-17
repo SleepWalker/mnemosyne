@@ -4,7 +4,6 @@
 // TODO: Прятать формы по клику на боди и по esc
 
 // если открыть контакт на редактирование, отредактировать добавив новое поле. то при сейве перестает работать morph
-// поправить позиционирование select
 
 // http://tympanus.net/Tutorials/PagePreloadingEffect/
 // http://tympanus.net/Development/SidebarTransitions/
