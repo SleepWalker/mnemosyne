@@ -3,6 +3,8 @@ var _ = require('underscore');
 
 var contactTypeDropdown = require('./ContactTypeDropdownList');
 
+require('../../../bower_components/perfect-scrollbar/src/perfect-scrollbar.js');
+
 var ContactManageForm = Backbone.View.extend({
     className: 'contact-form',
 
@@ -28,10 +30,7 @@ var ContactManageForm = Backbone.View.extend({
 
         this.$el.append(contactTypeDropdown.$el);
 
-        if(this.$el.css('position') == 'static') {
-            // for drop down menu
-            this.$el.css('position', 'relative');
-        }
+        this.fixDropdownPosition();
         
         if(this.collection && this.collection.length) {
             this.renderItems();
@@ -40,6 +39,13 @@ var ContactManageForm = Backbone.View.extend({
         }
 
         return this;
+    },
+
+    fixDropdownPosition: function() {
+        if(this.$el.css('position') == 'static') {
+            // for drop down menu
+            this.$el.css('position', 'relative');
+        }
     },
 
     renderItems: function() {
@@ -55,6 +61,25 @@ var ContactManageForm = Backbone.View.extend({
         view.render();
 
         this.$('.js-contacts').append(view.el);
+        this.handleScrollBar();
+    },
+
+    handleScrollBar: function() {
+        if(!this.$el.is(':visible')) {
+            return;
+        }
+
+        if(!this.__isScrollable) {
+            this.$('.js-scrollable').perfectScrollbar({
+                suppressScrollX: true,
+            });
+
+            this.__isScrollable = true;
+
+            return;
+        }
+
+        this.$('.js-scrollable').perfectScrollbar('update');
     },
 
     addButtonHandler: function(type) {
