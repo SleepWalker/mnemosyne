@@ -19,6 +19,7 @@ var ContactManageForm = Backbone.View.extend({
         }
 
         this.listenTo(this.collection, 'add', this.addItem);
+        this.listenTo(this.collection, 'destroy', this.handleDestroyButton);
         this.listenTo(contactTypeDropdown, 'change', this.addButtonHandler);
     },
 
@@ -62,6 +63,7 @@ var ContactManageForm = Backbone.View.extend({
 
         this.$('.js-contacts').append(view.el);
         this.handleScrollBar();
+        this.handleDestroyButton();
     },
 
     handleScrollBar: function() {
@@ -80,6 +82,10 @@ var ContactManageForm = Backbone.View.extend({
         }
 
         this.$('.js-scrollable').perfectScrollbar('update');
+    },
+
+    handleDestroyButton: function() {
+        this.$('.js-destroy')[this.collection.length < 2 ? 'hide' : 'show']();
     },
 
     addButtonHandler: function(type) {
