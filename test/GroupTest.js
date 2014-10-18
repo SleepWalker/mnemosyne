@@ -20,39 +20,59 @@ describe('Group', function() {
         var expected, group;
         beforeEach(function() {
             expected = 'person';
-            group = new groupCollection.model({
+            groupCollection.add({
                 id: 'groupId',
-                name: 'test'
+                name: 'test',
             });
+            group = groupCollection.at(0);
             group.stopListening(); // beacuse we want to test API only
         });
 
+        function addNewPersonToGroup() {
+            personCollection.add({
+                'id': expected,
+                'surname': 'surname',
+                'groupId': group.id
+            });
+            personCollection.at(0).id = expected;
+            group.addPerson(personCollection.at(0));
+        }
+
         it('should NOT save reference if Group.isNew()', function() {
-            var group = new groupCollection.model({
-                name: 'test'
+            group = new groupCollection.model({
+                name: 'test',
+                collection: groupCollection
             });
             group.stopListening();
 
             assert.notOk(group.hasPerson(expected));
 
-            personCollection.add({
-                'id': expected,
-                'surname': 'surname'
-            });
-            personCollection.at(0).id = expected;
-            group.addPerson(personCollection.at(0));
+            addNewPersonToGroup();
+
+            assert.notOk(group.hasPerson(expected));
+        });
+
+        it('should NOT save if model isNew()', function() {
+            group.save = sinon.spy();
+
+            group.addPerson(new personCollection.model({
+                'surname': 'surname',
+                'groupId': group.id
+            }));
+
+            assert.notOk(group.save.called);
+        });
+
+        it('should NOT save reference if has no collection', function() {
+            group.collection = null;
+
+            addNewPersonToGroup();
 
             assert.notOk(group.hasPerson(expected));
         });
 
         it('should be able to save reference to persons', function() {
-            personCollection.add({
-                'id': expected,
-                'groupId': group.id,
-                'surname': 'surname'
-            });
-            personCollection.at(0).id = expected;
-            group.addPerson(personCollection.at(0));
+            addNewPersonToGroup();
 
             assert.ok(group.hasPerson(expected));
         });
@@ -60,25 +80,9 @@ describe('Group', function() {
         it('should save itself when new Person relation is added', function() {
             group.save = sinon.spy();
 
-            personCollection.add({
-                'id': expected,
-                'groupId': group.id,
-                'surname': 'surname'
-            });
-            personCollection.at(0).id = expected;
-            group.addPerson(personCollection.at(0));
+            addNewPersonToGroup();
 
             assert.ok(group.save.called);
-        });
-
-        it('should NOT save if model isNew()', function() {
-            group.save = sinon.spy();
-
-            group.addPerson(new personCollection.model({
-                'surname': 'surname'
-            }));
-
-            assert.notOk(group.save.called);
         });
 
     });

@@ -13,6 +13,7 @@ var GroupList = Backbone.View.extend({
         Backbone.$.extend(this, options);
 
         this.listenTo(this.collection, 'add', this.render);
+        this.listenTo(this.collection, 'destroy', this.render); // TODO: should be tested
     },
 
     render: function()

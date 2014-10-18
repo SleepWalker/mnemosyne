@@ -54,6 +54,10 @@ var Group = Backbone.Model.extend({
             return;
         }
 
+        if (!this.collection) {
+            return;
+        }
+
         if(person.get('groupId') == this.id) {
             createRelation.call(this, personId);
         } else if(person.previousAttributes()['groupId'] == this.id) {

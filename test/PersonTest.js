@@ -44,8 +44,20 @@ describe('Person', function() {
             assert.equal(view.collection.length, expected);
         });
         
-        it('should not pass with `group` setted, when there is no `groupId`', function() {
-            
+        it('should clear groupId and group, when the group does not exists and than save', function() {
+            var NewPerson = Person.extend({
+                save: sinon.spy(),
+            });
+
+            model = new NewPerson({
+                id: '123',
+                groupId: 'notexists',
+                group: '/dev/null',
+            });
+
+            assert.notOk(model.get('groupId'), 'groupId is not empty');
+            assert.notOk(model.get('group'), 'group is not empty');
+            assert.ok(model.save.called, 'save was not called');
         });
     });
 });
