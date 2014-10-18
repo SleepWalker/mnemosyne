@@ -2,7 +2,7 @@ var $ = require('jquery');
 
 module.exports = function(options) {
     function eachRegion(callback) {
-        var regions = options.regions;
+        var regions = $.extend(true, [], options.regions); // TODO: the test that check whether array was cloned should be added
         var regionViews;
 
         for(var selector in regions) {
