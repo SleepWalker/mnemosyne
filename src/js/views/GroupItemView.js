@@ -1,7 +1,5 @@
 var Backbone = require('backbone');
 
-// TODO: self-orderable
-
 var GroupItemView = Backbone.View.extend({
     tagName: 'li',
 

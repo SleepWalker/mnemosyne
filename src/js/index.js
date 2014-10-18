@@ -2,8 +2,9 @@
  
 // TODO: Tests for Deletable mixin
 // TODO: Прятать формы по клику на боди и по esc
+// TODO: если открыть контакт на редактирование, отредактировать добавив новое поле. то при сейве перестает работать morph
+// TODO: пофиксить размытие на попапах форм в Chrome (судя по всему как-то связано с 3д ускорением)
 
-// если открыть контакт на редактирование, отредактировать добавив новое поле. то при сейве перестает работать morph
 
 // http://tympanus.net/Tutorials/PagePreloadingEffect/
 // http://tympanus.net/Development/SidebarTransitions/
@@ -39,7 +40,9 @@ App.configure({
                 '#region-person-cards': [
                     [require('./views/PersonCardList'), {itemViewOptions: {$formRenderTarget: 'body'}}]
                 ],
-                '#region-person-add': require('./views/PersonCardAddAction'),
+                '#region-person-add': [
+                    [require('./views/PersonCardAddAction'), {$formRenderTarget: 'body'}]
+                ],
                 '#region-user': require('./views/UserView'),
             }
         })

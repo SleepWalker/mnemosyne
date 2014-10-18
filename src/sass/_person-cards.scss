@@ -1,6 +1,3 @@
-.person-cards-container {
-}
-
 .person-card-list {
     padding: 20px;
     width: 100%;
@@ -9,16 +6,6 @@
     @include display-flex;
     @include justify-content(space-between);
     @include flex-wrap(wrap);
-}
-
-%panel {
-    background: #f2f2f2;
-    border: #d8d8d8 1px solid;
-    padding: 1.25em;
-
-    &:hover {
-        background: darken(#f2f2f2, 2.5%);
-    }
 }
 
 .person-card {
@@ -45,6 +32,10 @@
 
     .short-info {
         @extend %panel;
+
+        &:hover {
+            background: darken(#f2f2f2, 2.5%);
+        }
     }
 
     .short-info {
@@ -87,78 +78,4 @@
 .person-card.morph-active .short-info {
     opacity: 0;
     @include transition(opacity 0.1s ease 0s);
-}
-
-body > .person-form {
-    @extend %panel;
-    padding: 0;
-}
-
-.person-add-container {
-    .person-form {
-        background-color: $primary-color;
-    }
-}
-
-.no-transition {
-    @include transition(none !important);
-}
-
-.person-form {
-    overflow: hidden;
-    max-height: 90%;
-
-    position: fixed;
-    z-index: 10;
-
-    left: 0;
-    top: 0;
-    @include transform(none);
-
-    @include transition-duration(.6s);
-    @include transition-delay(.1s);
-    @include transition-property(
-        width,
-        height,
-        left,
-        top,
-        transform
-        );
-    @include transition-timing-function(cubic-bezier(0.7, 0, 0.3, 1));
-
-    > form {
-        visibility: hidden;
-        opacity: 0;
-        @include transition(opacity .3s ease .6s);
-
-        .row {
-            $transition-start: .4;
-            opacity: 0;
-            @include transform(scale(.85));
-            @include transition(transform .2s ease $transition-start * 1s);
-
-            @for $i from 1 through 20 {
-                &:nth-child(#{$i}) {
-                    @include transition-delay(($transition-start + .05*$i) * 1s);
-                }
-            }
-        }
-    }
-
-    &.morph-active {
-        left: 50% !important;
-        top: 50% !important;
-
-        @include transform(translate(-50%, -50%));
-
-        > form {
-            opacity: 1;
-            visibility: visible;
-
-            .row {
-                opacity: 1;
-                @include transform(none);
-            }
-        }
-    }
 }

@@ -23,6 +23,10 @@ var PersonCardForm = BaseFormView.extend({
     render: function() {
         BaseFormView.prototype.render.apply(this, [].slice.call(arguments));
 
+        if (this.getModel().isNew()) {
+            this.$el.addClass('person-form--new'); // TODO: test me
+        }
+
         this.renderContactsForm();
 
         this.renderDropDown();

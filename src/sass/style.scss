@@ -21,6 +21,12 @@
     clear: both;
 }
 
+%panel {
+    background: #f2f2f2;
+    border: #d8d8d8 1px solid;
+    padding: 1.25em;
+}
+
 $aside-width: 205px;
 
 @import "layout";
